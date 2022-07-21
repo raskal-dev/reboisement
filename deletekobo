@@ -1,0 +1,31 @@
+ function deleteDataKobo($url){
+   $curl = curl_init($url);  
+     curl_setopt($curl, CURLOPT_URL, $url);
+     curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+     curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "DELETE");
+     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+      $header = array();
+    $header[] = 'Content-length: 0';
+    $header[] = 'Content-type: application/json';
+    $header[] = 'Authorization: Token 4c9ada8f5d1c50fe6abfbdbe67f7d7f212eff386';
+
+     curl_setopt($curl, CURLOPT_HTTPHEADER, $header);
+      $result=curl_exec ($curl);
+      
+      $status_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        if (!curl_errno($curl)) {
+          switch ($http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE)) {
+            case 200:  # OK
+              break;
+            default:
+            $result = [];
+          }
+        }
+        curl_close($curl);
+ }
+ 
+ 
+ -------------------------------
+ 
+ 
+   $url='https://kc.kobotoolbox.org/api/v1/data/994242';

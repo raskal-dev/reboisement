@@ -1,0 +1,125 @@
+body{
+	background:url(../images/fond.png);
+}
+.well{
+	background-color: white;
+	box-shadow: 0px 0px 15px gray;
+}
+#corps{
+	margin-top:-30px;
+}
+/*Mise en page slide*/
+#contenu{
+	position:absolute;
+	top:50px;
+	z-index:9999;
+}
+#contenu h1{
+	text-shadow:0px 0px 4px red;
+}
+/*Mise en page header*/
+.titre{
+	cursor:default; 
+	text-shadow:1px 1px 1px red;
+}
+.navigation{
+	font-weight:bold;
+}
+#header{
+	box-shadow:0px 0px 5px red;
+}
+/*----*/
+/*Mise en page erreur du formulaire*/
+#erreur{
+	border:1px solid red;
+	box-shadow: 0px 0px 5px red;
+}
+/*----*/
+/*Mise ne page acceuil*/
+#acceuil{
+	height: 700px;
+	box-shadow: 0px 0px 7px blue;
+}
+#acceuil table{
+	font-size: 11px;
+}
+#acceuil table th{
+	background-color: #333;
+	color:white;
+	font-weight: bold;
+}
+#acceuil .resultatCherche{
+	color:red;
+	font-weight:bold;
+}
+/*Mise ne page detail agent*/
+#detail{
+	font-size: 11px;
+}
+/*Mise en page suiviconsultation*/
+#suivi{
+	margin-top:-30px;
+}
+#suivi #tableau{
+	height:450px;
+	overflow: scroll;
+	font-size: 11px;
+}
+#newConsult{
+	margin-top:-30px;
+	font-size: 12px;
+}
+
+/*Mise en page stocks*/
+#stocks #newEntree input{
+	color:#333;
+}
+#stocks{
+	height: 710px;
+}
+#tableAffiche{
+	height: 500px;
+}
+#tableAffiche .table{
+	font-size:11px;
+}
+
+/*Mise en page stock*/
+.erreurRegistre{
+	color:red;
+	font-weight: bold;
+	border:1 px solid red;
+	box-shadow: 0px 0px 5px red;
+	padding: 5px;
+}
+#stocks legend{
+	color:white;
+}
+#newForme{
+	font-size: 11px;
+	height:350px;
+	overflow:scroll;
+}
+
+/*Mise en page Admin*/
+#admin{
+	height: 550px;
+	overflow:scroll;
+}
+
+/*Mise en page historique*/
+.contenu_table{
+	height:550px;
+	overflow:scroll;
+}
+
+/*Mise en page du X pour fermer les mesages d'erreur*/
+#close{
+	font-size:40px;
+	cursor:pointer;
+	margin-top:-25px;
+	margin-right:-25px;
+}
+#close:hover{
+	color:red;
+}
