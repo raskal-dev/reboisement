@@ -42,6 +42,28 @@ if(isset($_POST['pepiniere']))
     exit();
 }
 
+// creation de route vers fichier pepiniere_production.php *****************************************************************************************************
+
+if(isset($_POST['pepiniere_production']))
+{
+    header("location:pepiniere_production.php");
+    unset($_SESSION['id_stocks']);
+    unset($_SESSION['inputs']);
+    unset($_SESSION['district']);
+    unset($_SESSION['commune']);
+    unset($_SESSION['params']);
+    unset($_SESSION['reboisement_id']);
+    unset($_SESSION['nom_vernac']);
+    unset($_SESSION['region']);
+    unset($_SESSION['nom_region']);
+    unset($_SESSION['nom_district']);
+    unset($_SESSION['id_pepiniere']);
+    unset($_SESSION['pepinieriste']);
+    exit();
+  }
+  
+// fin creation de route vers fichier pepiniere_production.php *****************************************************************************************************
+
 if(isset($_POST['planification']))
 {
     header("location:entreedonneesplanification.php");
@@ -852,6 +874,7 @@ text-shadow: 1px 0px 2px rgb(9, 120, 179), 1px 0px 2px rgb(0, 0, 0), 0px -1px 2p
     <div class="bg-white py-2 collapse-inner rounded">
       <button class="collapse-item active btn btn-sm" name="reboisement" style="color: #353030;">Reboisement</button>
       <button class="collapse-item active btn btn-sm" name="pepiniere" style="color: #353030;">Pépinières</button>
+      <button class="collapse-item active btn btn-sm" name="pepiniere_production" style="color: #353030;">Pépinière production</button>
     </div>
   </div>
 </li>
@@ -934,12 +957,11 @@ text-shadow: 1px 0px 2px rgb(9, 120, 179), 1px 0px 2px rgb(0, 0, 0), 0px -1px 2p
 <!-- Divider -->
 <hr class="sidebar-divider">
 
-<!--
-<li class="nav-item active">
+<!-- <li class="nav-item active">
   <a class="nav-link" href="register.php" style="color: #F2EAEA;">
     <i class="fas fa-fw fa-sign-out-alt" style="font-weight: bold;text-shadow: 1px 0px 2px rgb(0, 0, 0), 1px 0px 2px rgb(0, 0, 0), 0px -1px 2px rgb(0, 0, 0), 0px 1px 2px rgb(0, 0, 0), 0px 0px 12px rgb(0, 0, 0);"></i>
     <span style="font-weight: bold;text-shadow: 1px 0px 2px rgb(0, 0, 0), 1px 0px 2px rgb(0, 0, 0), 0px -1px 2px rgb(0, 0, 0), 0px 1px 2px rgb(0, 0, 0), 0px 0px 12px rgb(0, 0, 0);">Inscription</span></a>
-</li>
+</li> -->
 
 
 <?php endif;?>
@@ -956,7 +978,6 @@ text-shadow: 1px 0px 2px rgb(9, 120, 179), 1px 0px 2px rgb(0, 0, 0), 0px -1px 2p
 <div id="content-wrapper" >
  <!-- Main Content -->
  <div id="content">
-<!--
 
   <!-- Scroll to Top Button-->
   <a class="scroll-to-top rounded" href="#page-top">
