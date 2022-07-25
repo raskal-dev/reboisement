@@ -26,6 +26,23 @@ $Fonction->allow('member');
    
    
 
+   function fill_espece($db)
+   { 
+      $output = '';
+      $mot_cle = " select  *
+            from  especes  ORDER BY especes_nom ASC
+           ";
+      $statement = $db->prepare($mot_cle);
+      $statement->execute();
+      $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+      foreach($result as $row)
+      {
+          $output .= '<option value="'.$row["especes_nom"].'">'.$row["especes_nom"].'</option>';
+      }
+      return $output;
+   }
+
+
 
 ?>
 <?php
@@ -58,7 +75,7 @@ require_once ('includes/navbar.php');
               <br><br>
 
                <h5><b>SYSTÈME DE SUIVI DES ACTIVITÉS DE REBOISEMENT ET DE RESTAURATION DES PAYSAGES FORÊSTIERS À MADAGASCAR . MINISTÈRE DE L'ENVIRONNEMENT ET DU DÉVELOPPEMENT DURABLE - COLLECTE DES DONNÉES SUR LES PÉPINIÈRES - PRODUCTION</b></h5>
-               <div class="row">
+               <!-- <div class="row">
                  
                  <div class="col-sm-3">
                    <div class="form-group">
@@ -84,9 +101,7 @@ require_once ('includes/navbar.php');
                            <label>Région : </label>
                            <select name="region" type="text" class="form-control region" id="id_region">
                               <option></option>
-                              <?php while($info_pep=$req_pep->fetch(PDO::FETCH_ASSOC)):?>
-                                 <option value="<?=$info_pep['id_pepiniere']?>"><?=$info_pep['site']?></option>
-                              <?php endwhile;?>
+                              
                            </select>
                         </div>
                     </div>
@@ -131,7 +146,7 @@ require_once ('includes/navbar.php');
                         </div>
                     </div>
                 </div>
-
+ -->
 
 
                <br>
@@ -146,17 +161,41 @@ require_once ('includes/navbar.php');
                             <input name="nom_pepiniere" type="text" class="form-control responsable"> -->
                             <div class="form-group">
                             <label>Nom Pépinière : </label>
-                               <select name="nom_pepiniere" type="text" class="form-control region" id="id_region">
-                                  <option></option>
-                                  <?php while($info_pep=$req_pep->fetch(PDO::FETCH_ASSOC)):?>
-                                     <option value="<?=$info_pep['id_pepiniere']?>"><?=$info_pep['site']?></option>
+                               <select name="nom_pepiniere" type="text" class="form-control" id="id_region">
+                                  <?php while($info=$req_pep->fetch(PDO::FETCH_ASSOC)):?>...
+                                     <option value="<?=$info['id_pepiniere']?>"><?=$info['site']?></option>
                                   <?php endwhile;?>
                                </select>
                             </div>
-                        </div>
+                      </div>
+                      <div class="col-sm-3">
+                        <!-- Button trigger modal -->
+<button type="button" class="btn btn-success" data-toggle="modal" data-target="#staticBackdrop">
+  Launch static backdrop modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">X</button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Understood</button>
+      </div>
+    </div>
+  </div>
+</div>
+                      </div>
 
                     </div>
-
+<!-- 
                     <div class="col-sm-3">
                         <div class="form-group">
                             <label>Type Acteur : </label>
@@ -175,7 +214,7 @@ require_once ('includes/navbar.php');
                             <label>Contact Pépinièriste : </label>
                             <input name="contact_pepinieriste" type="text" class="form-control objectifReboisement">
                         </div>
-                    </div>
+                    </div> -->
                 </div>
 
 
@@ -193,18 +232,23 @@ require_once ('includes/navbar.php');
                      </thead>
                      <tbody>
                            <tr>
-                                 <td><input name="essence[]" type="text" class="form-control essence"></td>
+                           <td><select name="espece" class="form-control typeActeur" id="dispositiion">
+                                 <option></option>
+                                 <?php echo fill_espece($db);?></select>
+                                 </td>
                                  <td><input name="nombrePlantSemi[]" type="text" class="form-control nombrePlantSemi"></td>
                                  <td><input name="dateSemi[]" type="date" class="form-control dateSemi"></td>
                            </tr>
                      </tbody>
                      </table>
+
+                      
                      <script>
                         $(document).ready(function(){
                           $(document).on('click','.add',function(){
                             var html = '';
                             html += '<tr>';
-                            html += '<td><input name="essence[]" type="text" class="form-control essence"></td>';
+                            html += '<td><select name="espece" class="form-control typeActeur" id="dispositiion"> <option></option><?php echo fill_espece($db);?></select></td>';
                             html += '<td><input name="nombrePlantSemi[]" type="text" class="form-control nombrePlantSemi"></td>';
                             html += '<td><input name="dateSemi[]" type="date" class="form-control dateSemi"></td>';
                             html += '<td><button type="button" name="remove" class="btn btn-danger btn-sm remove"><span class="fa fa-asterisk"></span></button></td></tr>';
@@ -299,6 +343,8 @@ require_once ('includes/navbar.php');
                         });
                         
                       </script>
+
+
                       <div class="modal-footer">
                           <a type="button" class="btn btn-danger" href="pepiniere.php">Retour</a>
                           <input type="submit" id="submit" class="btn btn-success" value="Valider">
