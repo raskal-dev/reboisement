@@ -98,7 +98,7 @@ require_once('includes/navbar.php');
 ?>
 
 <!-- debug de var_dump -->
-<?php if(isset($_SESSION)){var_dump($_SESSION);} ?>
+<?php /*if(isset($_SESSION)){var_dump($_SESSION);}*/ ?>
 <?php if (!empty($erreurs)) : ?>..
 <div class="alert alert-danger" id="messageFlash">
   <p>Vous n'avez pas rempli le formulaire correctement</p>
