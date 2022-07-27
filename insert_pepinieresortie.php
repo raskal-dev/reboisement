@@ -7,7 +7,7 @@ $Fonction->allow('member');
 
 if(isset($_POST['espece'])){
 
-     $id_pepiniere=trim($Fonction->secure($_POST['espece'][$id_pepiniere]));
+     $id_pepiniere=trim($Fonction->secure($_POST['espece']));
     
     for($count = 0; $count < count($_POST['nombrePlantSorti']); $count++)
     {

@@ -42,20 +42,20 @@ if(isset($_POST['essence']))
     $sql_rbsmt="INSERT INTO `pepiniere`(`dateRempl`, `region`, `district`, `commune`, `fokontany`, `site`,  `longitude`, `latitude`, `responsablePepiniere`, `nombrePlatebande`, `anneeExercice`, `users_id`) VALUES (NOW(), :region, :district, :commune, :fokontany, :site,  :longitude, :latitude, :responsablePepiniere, :nombrePlatebande,:anneeExercice, :users_id)";
     $req_rbsmt=$db->prepare($sql_rbsmt);
     $req_rbsmt->execute(array(
-                                                                                                                                                            "region"=>$region,
-                                                                                                                                                            "district"=>$district,
-                                                                                                                                                            "commune"=>$commune,
-                                                                                                                                                            "fokontany"=>$fokontany,
-                                                                                                                                                            "site"=>$site,
-                                                                                                                                                            "longitude"=>$longitude,
-                                                                                                                                                            "latitude"=>$latitude,
-                                                                                                                                                            "responsablePepiniere"=>$responsablePepiniere,
-                                                                                                                                                            "nombrePlatebande"=>$nombrePlatebande,
-                                                                                                                                                            "anneeExercice"=>$anneeExercice,
-                                                                                                                                                             "users_id"=>$users_id
-                    ));
+                "region" => $region,
+                "district" => $district,
+                "commune" => $commune,
+                "fokontany" => $fokontany,
+                "site" => $site,
+                "longitude" => $longitude,
+                "latitude" => $latitude,
+                "responsablePepiniere" => $responsablePepiniere,
+                "nombrePlatebande" => $nombrePlatebande,
+                "anneeExercice" => $anneeExercice,
+                "users_id"=>$users_id
+        ));
     $id_pepiniere=$db->lastInsertId();
-    for($count = 0; $count < count($_POST['essence']); $count++)
+    for($count = 0; $count < count($_POST['nombrePlantSemi']); $count++)
     {
             $users_id=$Fonction->user('id');
             $_POST['essence'][$count]=trim($Fonction->secure($_POST['essence'][$count]));
@@ -63,8 +63,8 @@ if(isset($_POST['essence']))
             $_POST['dateSemi'][$count]=trim($Fonction->secure($_POST['dateSemi'][$count]));
             $_POST['SourcePlant'][$count]=trim($Fonction->secure($_POST['SourcePlant'][$count]));
 
-            $query="INSERT INTO `essence_pepiniere_semi`(`dateRegist`, `essence`,  `nombrePlantSemi`, `dateSemi`, `id_pepiniere`, `users_id`)
-                    VALUES(NOW(), :essence,:nombrePlantSemi,:dateSemi,:id_pepiniere, :users_id)";
+            $query="INSERT INTO `essence_pepiniere_semi`( `essence`,  `nombrePlantSemi`, `dateSemi`, `id_pepiniere`, `users_id`)
+                    VALUES(:essence,:nombrePlantSemi,:dateSemi,:id_pepiniere, :users_id)";
             $statement = $db->prepare($query);
             $statement->execute(array(
                                     'essence'=>$_POST['essence'][$count],

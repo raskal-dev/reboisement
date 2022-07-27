@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Hôte : 127.0.0.1
--- Généré le :  jeu. 14 juil. 2022 à 13:42
--- Version du serveur :  10.1.40-MariaDB
--- Version de PHP :  7.3.5
+-- Hôte : 127.0.0.1:3306
+-- Généré le : mer. 27 juil. 2022 à 12:01
+-- Version du serveur : 8.0.27
+-- Version de PHP : 8.0.13
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -19,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données :  `reboisement`
+-- Base de données : `reboisement`
 --
 
 -- --------------------------------------------------------
@@ -28,12 +27,14 @@ SET time_zone = "+00:00";
 -- Structure de la table `annee_reboisement`
 --
 
-CREATE TABLE `annee_reboisement` (
-  `id` int(11) NOT NULL,
-  `periode` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+DROP TABLE IF EXISTS `annee_reboisement`;
+CREATE TABLE IF NOT EXISTS `annee_reboisement` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `periode` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `date_debut` date NOT NULL,
-  `date_fin` date NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `date_fin` date NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3 ;
 
 --
 -- Déchargement des données de la table `annee_reboisement`
@@ -48,10 +49,12 @@ INSERT INTO `annee_reboisement` (`id`, `periode`, `date_debut`, `date_fin`) VALU
 -- Structure de la table `apport_fertilisation`
 --
 
-CREATE TABLE `apport_fertilisation` (
-  `id` int(11) NOT NULL,
-  `apportfertilisation_libelle` varchar(250) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+DROP TABLE IF EXISTS `apport_fertilisation`;
+CREATE TABLE IF NOT EXISTS `apport_fertilisation` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `apportfertilisation_libelle` varchar(250) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Déchargement des données de la table `apport_fertilisation`
@@ -67,10 +70,12 @@ INSERT INTO `apport_fertilisation` (`id`, `apportfertilisation_libelle`) VALUES
 -- Structure de la table `approche`
 --
 
-CREATE TABLE `approche` (
-  `id` int(11) NOT NULL,
-  `libelle` varchar(250) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+DROP TABLE IF EXISTS `approche`;
+CREATE TABLE IF NOT EXISTS `approche` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `libelle` varchar(250) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Déchargement des données de la table `approche`
@@ -88,10 +93,12 @@ INSERT INTO `approche` (`id`, `libelle`) VALUES
 -- Structure de la table `class`
 --
 
-CREATE TABLE `class` (
-  `id` int(11) NOT NULL,
-  `class` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+DROP TABLE IF EXISTS `class`;
+CREATE TABLE IF NOT EXISTS `class` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `class` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Déchargement des données de la table `class`
@@ -108,12 +115,13 @@ INSERT INTO `class` (`id`, `class`) VALUES
 -- Structure de la table `commune`
 --
 
-CREATE TABLE `commune` (
-  `id` int(11) NOT NULL,
-  `district_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `commune`;
+CREATE TABLE IF NOT EXISTS `commune` (
+  `id` int NOT NULL,
+  `district_id` int NOT NULL,
   `nom_commune` varchar(255) DEFAULT NULL,
   `nom_district` varchar(250) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
 -- Déchargement des données de la table `commune`
@@ -1706,9 +1714,10 @@ INSERT INTO `commune` (`id`, `district_id`, `nom_commune`, `nom_district`) VALUE
 -- Structure de la table `deletelog`
 --
 
-CREATE TABLE `deletelog` (
-  `id` int(11) NOT NULL,
-  `reboisement_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `deletelog`;
+CREATE TABLE IF NOT EXISTS `deletelog` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `reboisement_id` int NOT NULL,
   `deletedate` date DEFAULT NULL,
   `deleteuser` varchar(500) DEFAULT NULL,
   `acteur` varchar(1000) DEFAULT NULL,
@@ -1731,8 +1740,9 @@ CREATE TABLE `deletelog` (
   `class_` varchar(1000) DEFAULT 'NULL',
   `mangroveOuTerrestre` varchar(255) DEFAULT 'NULL',
   `dateMiseEnTerre` date DEFAULT NULL,
-  `anneeRebois` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `anneeRebois` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Déchargement des données de la table `deletelog`
@@ -1747,12 +1757,14 @@ INSERT INTO `deletelog` (`id`, `reboisement_id`, `deletedate`, `deleteuser`, `ac
 -- Structure de la table `diredd_dredd_ciredd`
 --
 
-CREATE TABLE `diredd_dredd_ciredd` (
-  `id_diredd_dredd_ciredd` int(11) NOT NULL,
+DROP TABLE IF EXISTS `diredd_dredd_ciredd`;
+CREATE TABLE IF NOT EXISTS `diredd_dredd_ciredd` (
+  `id_diredd_dredd_ciredd` int NOT NULL AUTO_INCREMENT,
   `nom_diredd_dredd_ciredd` varchar(255) DEFAULT NULL,
   `sigle` varchar(255) NOT NULL,
-  `sign` varchar(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `sign` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`id_diredd_dredd_ciredd`)
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `diredd_dredd_ciredd`
@@ -1789,11 +1801,15 @@ INSERT INTO `diredd_dredd_ciredd` (`id_diredd_dredd_ciredd`, `nom_diredd_dredd_c
 -- Structure de la table `diredd_dredd_ciredd_region`
 --
 
-CREATE TABLE `diredd_dredd_ciredd_region` (
-  `id_diredd_dredd_ciredd_region` int(11) NOT NULL,
-  `id_diredd_dredd_ciredd` int(11) NOT NULL,
-  `id_region` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+DROP TABLE IF EXISTS `diredd_dredd_ciredd_region`;
+CREATE TABLE IF NOT EXISTS `diredd_dredd_ciredd_region` (
+  `id_diredd_dredd_ciredd_region` int NOT NULL AUTO_INCREMENT,
+  `id_diredd_dredd_ciredd` int NOT NULL,
+  `id_region` int NOT NULL,
+  PRIMARY KEY (`id_diredd_dredd_ciredd_region`),
+  KEY `id_diredd_dredd_ciredd` (`id_diredd_dredd_ciredd`),
+  KEY `id_region` (`id_region`)
+) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `diredd_dredd_ciredd_region`
@@ -1855,12 +1871,16 @@ INSERT INTO `diredd_dredd_ciredd_region` (`id_diredd_dredd_ciredd_region`, `id_d
 -- Structure de la table `district`
 --
 
-CREATE TABLE `district` (
-  `id` int(11) NOT NULL,
-  `region_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `district`;
+CREATE TABLE IF NOT EXISTS `district` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `region_id` int NOT NULL,
   `nom_district` varchar(255) DEFAULT NULL,
-  `region_libelle` varchar(250) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `region_libelle` varchar(250) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `region_id` (`region_id`),
+  KEY `nom_district` (`nom_district`)
+) ENGINE=InnoDB AUTO_INCREMENT=115 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Déchargement des données de la table `district`
@@ -1988,10 +2008,12 @@ INSERT INTO `district` (`id`, `region_id`, `nom_district`, `region_libelle`) VAL
 -- Structure de la table `ecosysteme`
 --
 
-CREATE TABLE `ecosysteme` (
-  `ID_ECOSYSTEME` int(6) NOT NULL,
-  `LIBELLE_ECOSYSTEME` varchar(250) COLLATE utf8_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+DROP TABLE IF EXISTS `ecosysteme`;
+CREATE TABLE IF NOT EXISTS `ecosysteme` (
+  `ID_ECOSYSTEME` int NOT NULL AUTO_INCREMENT,
+  `LIBELLE_ECOSYSTEME` varchar(250) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`ID_ECOSYSTEME`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3 ;
 
 --
 -- Déchargement des données de la table `ecosysteme`
@@ -2007,10 +2029,12 @@ INSERT INTO `ecosysteme` (`ID_ECOSYSTEME`, `LIBELLE_ECOSYSTEME`) VALUES
 -- Structure de la table `especes`
 --
 
-CREATE TABLE `especes` (
-  `id` int(11) NOT NULL,
-  `especes_nom` varchar(250) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+DROP TABLE IF EXISTS `especes`;
+CREATE TABLE IF NOT EXISTS `especes` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `especes_nom` varchar(250) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=441 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Déchargement des données de la table `especes`
@@ -2464,15 +2488,27 @@ INSERT INTO `especes` (`id`, `especes_nom`) VALUES
 -- Structure de la table `essence_pepiniere_semi`
 --
 
-CREATE TABLE `essence_pepiniere_semi` (
-  `id_essence_pepiniere` int(11) NOT NULL,
+DROP TABLE IF EXISTS `essence_pepiniere_semi`;
+CREATE TABLE IF NOT EXISTS `essence_pepiniere_semi` (
+  `id_essence_pepiniere` int NOT NULL AUTO_INCREMENT,
   `dateRegist` date DEFAULT NULL,
   `dateSemi` date DEFAULT NULL,
   `essence` varchar(500) DEFAULT NULL,
-  `nombrePlantSemi` int(11) DEFAULT NULL,
-  `id_pepiniere` int(11) NOT NULL,
-  `users_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `nombrePlantSemi` int DEFAULT NULL,
+  `id_pepiniere` int NOT NULL,
+  `users_id` int NOT NULL,
+  PRIMARY KEY (`id_essence_pepiniere`),
+  KEY `users_id` (`users_id`),
+  KEY `id_pepiniere` (`id_pepiniere`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
+
+--
+-- Déchargement des données de la table `essence_pepiniere_semi`
+--
+
+INSERT INTO `essence_pepiniere_semi` (`id_essence_pepiniere`, `dateRegist`, `dateSemi`, `essence`, `nombrePlantSemi`, `id_pepiniere`, `users_id`) VALUES
+(1, '2022-07-27', '2022-07-12', 'dfg', 200, 43, 9),
+(2, '2022-07-27', '2022-07-29', 'dfg', 300, 43, 9);
 
 -- --------------------------------------------------------
 
@@ -2480,13 +2516,19 @@ CREATE TABLE `essence_pepiniere_semi` (
 -- Structure de la table `essence_pepiniere_sorti`
 --
 
-CREATE TABLE `essence_pepiniere_sorti` (
-  `id_essence_pepiniere` int(11) NOT NULL,
+DROP TABLE IF EXISTS `essence_pepiniere_sorti`;
+CREATE TABLE IF NOT EXISTS `essence_pepiniere_sorti` (
+  `id_essence_pepiniere` int NOT NULL AUTO_INCREMENT,
   `dateSorti` date DEFAULT NULL,
-  `essence` varchar(500) DEFAULT NULL,
-  `nombrePlantSorti` int(11) DEFAULT NULL,
-  `id_pepiniere` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `espece` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `nombrePlantSorti` int DEFAULT NULL,
+  `nom_beneficiaire` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `contact_beneficiare` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `lieu_reboisement` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `id_pepiniere` int NOT NULL,
+  PRIMARY KEY (`id_essence_pepiniere`),
+  KEY `id_pepiniere` (`id_pepiniere`)
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb3;
 
 -- --------------------------------------------------------
 
@@ -2494,14 +2536,18 @@ CREATE TABLE `essence_pepiniere_sorti` (
 -- Structure de la table `gpsrebois`
 --
 
-CREATE TABLE `gpsrebois` (
-  `id_gpsrebois` int(11) NOT NULL,
+DROP TABLE IF EXISTS `gpsrebois`;
+CREATE TABLE IF NOT EXISTS `gpsrebois` (
+  `id_gpsrebois` int NOT NULL AUTO_INCREMENT,
   `dateInsert` date DEFAULT NULL,
   `latitude` decimal(11,9) DEFAULT NULL,
   `longitude` decimal(11,9) DEFAULT NULL,
-  `users_id` int(11) NOT NULL,
-  `reboisement_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `users_id` int NOT NULL,
+  `reboisement_id` int NOT NULL,
+  PRIMARY KEY (`id_gpsrebois`),
+  KEY `reboisement_id` (`reboisement_id`),
+  KEY `users_id` (`users_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Déchargement des données de la table `gpsrebois`
@@ -2519,10 +2565,12 @@ INSERT INTO `gpsrebois` (`id_gpsrebois`, `dateInsert`, `latitude`, `longitude`, 
 -- Structure de la table `objectif_rpf`
 --
 
-CREATE TABLE `objectif_rpf` (
-  `ID_OBJECTIF_RPF` int(6) NOT NULL,
-  `LIBELLE_OBJECTIF_RPF` varchar(250) COLLATE utf8_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+DROP TABLE IF EXISTS `objectif_rpf`;
+CREATE TABLE IF NOT EXISTS `objectif_rpf` (
+  `ID_OBJECTIF_RPF` int NOT NULL AUTO_INCREMENT,
+  `LIBELLE_OBJECTIF_RPF` varchar(250) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`ID_OBJECTIF_RPF`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3 ;
 
 --
 -- Déchargement des données de la table `objectif_rpf`
@@ -2539,11 +2587,13 @@ INSERT INTO `objectif_rpf` (`ID_OBJECTIF_RPF`, `LIBELLE_OBJECTIF_RPF`) VALUES
 -- Structure de la table `objectif_specifique`
 --
 
-CREATE TABLE `objectif_specifique` (
-  `ID_OBJECTIF_SPECIFIQUE` int(11) NOT NULL,
-  `LIBELLE_OBJECTIF_SPECIFIQUE` varchar(250) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `ID_OBECTIF_RPF` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+DROP TABLE IF EXISTS `objectif_specifique`;
+CREATE TABLE IF NOT EXISTS `objectif_specifique` (
+  `ID_OBJECTIF_SPECIFIQUE` int NOT NULL AUTO_INCREMENT,
+  `LIBELLE_OBJECTIF_SPECIFIQUE` varchar(250) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `ID_OBECTIF_RPF` int NOT NULL,
+  PRIMARY KEY (`ID_OBJECTIF_SPECIFIQUE`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb3 ;
 
 --
 -- Déchargement des données de la table `objectif_specifique`
@@ -2577,10 +2627,12 @@ INSERT INTO `objectif_specifique` (`ID_OBJECTIF_SPECIFIQUE`, `LIBELLE_OBJECTIF_S
 -- Structure de la table `organisme_appui`
 --
 
-CREATE TABLE `organisme_appui` (
-  `id` int(11) NOT NULL,
-  `organisme_nom` varchar(250) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+DROP TABLE IF EXISTS `organisme_appui`;
+CREATE TABLE IF NOT EXISTS `organisme_appui` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `organisme_nom` varchar(250) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 -- --------------------------------------------------------
 
@@ -2588,69 +2640,73 @@ CREATE TABLE `organisme_appui` (
 -- Structure de la table `pepiniere`
 --
 
-CREATE TABLE `pepiniere` (
-  `id_pepiniere` int(11) NOT NULL,
-  `dateRempl` date DEFAULT NULL,
+DROP TABLE IF EXISTS `pepiniere`;
+CREATE TABLE IF NOT EXISTS `pepiniere` (
+  `id_pepiniere` int NOT NULL AUTO_INCREMENT,
+  `dateRempl` date DEFAULT '0000-00-00',
   `region` varchar(500) DEFAULT NULL,
   `district` varchar(500) DEFAULT NULL,
   `commune` varchar(500) DEFAULT NULL,
   `fokontany` varchar(500) DEFAULT NULL,
   `site` varchar(500) DEFAULT NULL,
   `responsablePepiniere` varchar(500) DEFAULT NULL,
-  `latitude` decimal(11,9) DEFAULT NULL,
-  `longitude` decimal(11,9) DEFAULT NULL,
-  `nombrePlatebande` int(11) DEFAULT NULL,
+  `contact_pepiniere` varchar(10) DEFAULT NULL,
+  `latitude` decimal(11,9) DEFAULT '0.000000000',
+  `longitude` decimal(11,9) DEFAULT '0.000000000',
+  `nombrePlatebande` int DEFAULT '0',
   `anneeExercice` varchar(10) DEFAULT NULL,
-  `users_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `users_id` int NOT NULL,
+  PRIMARY KEY (`id_pepiniere`),
+  KEY `users_id` (`users_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Déchargement des données de la table `pepiniere`
 --
 
-INSERT INTO `pepiniere` (`id_pepiniere`, `dateRempl`, `region`, `district`, `commune`, `fokontany`, `site`, `responsablePepiniere`, `latitude`, `longitude`, `nombrePlatebande`, `anneeExercice`, `users_id`) VALUES
-(1, '2022-04-07', 'ATSINANANA', 'Toamasina', 'Antetezambaro', 'Vohidrotra', 'Ampandroantsiriry', 'DREDD Ats', '-18.058055600', '49.378083300', 242, '2021-2022', 9),
-(2, '2022-04-07', 'ATSINANANA', 'Mahanoro', 'Mahanoro', 'Tsararivotra', 'CEF Mahanoro', 'CEF Mahanoro', '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(3, '2022-04-07', 'ATSINANANA', 'Mahanoro', 'Betsizaraina', 'Niarovanivolo', 'Niarovanivolo', 'CEF Mahanoro et Projet PACARC', '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(4, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Ambatofisaka', 'Ambinanimangabe', 'Ambinanimangabe', 'CEF Marolambo', '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(5, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Ambalapaiso II', 'Ambalapaiso II', 'Ambalapaiso II', 'CEF Marolambo', '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(6, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Anosiarivo', 'Anosiarivo', 'Anosiarivo', 'CEF Marolambo', '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(7, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Betampona', 'Vohidamba', 'Vohidamba', 'CEF Marolambo', '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(8, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'CEF', 'CEF', 'CEF Marolambo', '0.000000000', '0.000000000', 6, '2021-2022', 9),
-(9, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Androrangavola Tsienta', 'Androrangavola Tsienta', 'CEF Marolambo', '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(10, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Maroleotra', 'Antanandrangady', 'CEF Marolambo', '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(11, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Ampasimbola', 'Ampasimbola', 'CEF Marolambo', '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(12, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Ambatomitsangana', 'Ambatomitsangana', 'CEF Marolambo', '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(13, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Lapatsara', 'Tajomanga', 'CEF Marolambo', '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(14, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Ambodivoangy', 'Ambodivoangy', 'CEF Marolambo', '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(15, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Toakasina', 'Antsaharoy', 'PN Marolambo', '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(16, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Sakavolo', 'Sakavolo', 'PN Marolambo', '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(17, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Ambodivoara', 'Ambodivoara', 'PN Marolambo', '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(18, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Lavakianja', 'Lavakianja', 'PN Marolambo', '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(19, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Ambodinonoka', 'Ambodinonoka', 'PN Marolambo', '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(20, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Andranovakoana', 'Andranovakoana', 'PN Marolambo', '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(21, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Ankazomasina', 'Ankazomasina', 'PN Marolambo', '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(22, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Marojiro', 'Marojiro', 'PN Marolambo', '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(23, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Madiofasina', 'Madiofasina', 'PN Marolambo', '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(24, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Masobeony', 'Masobeony', 'PN Marolambo', '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(25, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Vohitsara', 'Vohitsara', 'PN Marolambo', '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(26, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Manakana II', 'Manakana II', 'PN Marolambo', '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(27, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Tombohantrova', 'Tombohantrova', 'PN Marolambo', '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(28, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Mandroalina', 'Mandroalina', 'PN Marolambo', '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(29, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Andranambomaro', 'Andranambomaro', 'PN Marolambo', '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(30, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Taolandravina', 'Taolandravina', 'PN Marolambo', '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(31, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Ambohitsara', 'Ambohitsara', 'PN Marolambo', '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(32, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Salehy', 'Salehy', 'PN Marolambo', '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(33, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Fiadanana', 'Fiadanana', 'PN Marolambo', '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(34, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Sahanavo', 'Sahanavo', 'PN Marolambo', '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(35, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Ambohimiadana', 'Ambohimiadana', 'PN Marolambo', '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(36, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Tanambao', 'Tanambao', 'PN Marolambo', '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(37, '2022-04-07', 'ATSINANANA', 'Antanambao Manampotsy', 'Marolambo', 'Antanambao Manampotsy', '', 'CEF Antanambao Manampotsy', '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(38, '2022-04-07', 'ATSINANANA', 'Vatomandry', 'Marolambo', 'Vohitsara', 'CEF', 'CEF Vatomandry', '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(39, '2022-04-07', 'ATSINANANA', 'Vatomandry', 'Marolambo', 'Ambalatenina', 'Amboditafara', 'BCM', '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(40, '2022-04-07', 'ATSINANANA', 'Vatomandry', 'Marolambo', 'Ranomintina', 'Andraharahabe', 'BCM', '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(41, '2022-04-07', 'ATSINANANA', 'Vatomandry', 'Marolambo', 'Antseranambe', 'Ambodiakondromena', 'BCM', '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(42, '2022-04-07', 'ATSINANANA', '', 'Marolambo', 'Lanonana', 'Lanonana', 'VOI Dimbiazanjafy, Aspinall', '-18.732388889', '48.814250000', 0, '2021-2022', 9);
+INSERT INTO `pepiniere` (`id_pepiniere`, `dateRempl`, `region`, `district`, `commune`, `fokontany`, `site`, `responsablePepiniere`, `contact_pepiniere`, `latitude`, `longitude`, `nombrePlatebande`, `anneeExercice`, `users_id`) VALUES
+(1, '2022-04-07', 'ATSINANANA', 'Toamasina', 'Antetezambaro', 'Vohidrotra', 'Ampandroantsiriry', 'DREDD Ats', NULL, '-18.058055600', '49.378083300', 242, '2021-2022', 9),
+(2, '2022-04-07', 'ATSINANANA', 'Mahanoro', 'Mahanoro', 'Tsararivotra', 'CEF Mahanoro', 'CEF Mahanoro', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
+(3, '2022-04-07', 'ATSINANANA', 'Mahanoro', 'Betsizaraina', 'Niarovanivolo', 'Niarovanivolo', 'CEF Mahanoro et Projet PACARC', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
+(4, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Ambatofisaka', 'Ambinanimangabe', 'Ambinanimangabe', 'CEF Marolambo', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
+(5, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Ambalapaiso II', 'Ambalapaiso II', 'Ambalapaiso II', 'CEF Marolambo', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
+(6, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Anosiarivo', 'Anosiarivo', 'Anosiarivo', 'CEF Marolambo', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
+(7, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Betampona', 'Vohidamba', 'Vohidamba', 'CEF Marolambo', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
+(8, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'CEF', 'CEF', 'CEF Marolambo', NULL, '0.000000000', '0.000000000', 6, '2021-2022', 9),
+(9, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Androrangavola Tsienta', 'Androrangavola Tsienta', 'CEF Marolambo', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
+(10, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Maroleotra', 'Antanandrangady', 'CEF Marolambo', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
+(11, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Ampasimbola', 'Ampasimbola', 'CEF Marolambo', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
+(12, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Ambatomitsangana', 'Ambatomitsangana', 'CEF Marolambo', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
+(13, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Lapatsara', 'Tajomanga', 'CEF Marolambo', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
+(14, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Ambodivoangy', 'Ambodivoangy', 'CEF Marolambo', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
+(15, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Toakasina', 'Antsaharoy', 'PN Marolambo', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
+(16, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Sakavolo', 'Sakavolo', 'PN Marolambo', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
+(17, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Ambodivoara', 'Ambodivoara', 'PN Marolambo', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
+(18, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Lavakianja', 'Lavakianja', 'PN Marolambo', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
+(19, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Ambodinonoka', 'Ambodinonoka', 'PN Marolambo', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
+(20, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Andranovakoana', 'Andranovakoana', 'PN Marolambo', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
+(21, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Ankazomasina', 'Ankazomasina', 'PN Marolambo', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
+(22, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Marojiro', 'Marojiro', 'PN Marolambo', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
+(23, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Madiofasina', 'Madiofasina', 'PN Marolambo', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
+(24, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Masobeony', 'Masobeony', 'PN Marolambo', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
+(25, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Vohitsara', 'Vohitsara', 'PN Marolambo', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
+(26, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Manakana II', 'Manakana II', 'PN Marolambo', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
+(27, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Tombohantrova', 'Tombohantrova', 'PN Marolambo', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
+(28, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Mandroalina', 'Mandroalina', 'PN Marolambo', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
+(29, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Andranambomaro', 'Andranambomaro', 'PN Marolambo', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
+(30, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Taolandravina', 'Taolandravina', 'PN Marolambo', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
+(31, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Ambohitsara', 'Ambohitsara', 'PN Marolambo', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
+(32, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Salehy', 'Salehy', 'PN Marolambo', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
+(33, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Fiadanana', 'Fiadanana', 'PN Marolambo', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
+(34, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Sahanavo', 'Sahanavo', 'PN Marolambo', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
+(35, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Ambohimiadana', 'Ambohimiadana', 'PN Marolambo', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
+(36, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Tanambao', 'Tanambao', 'PN Marolambo', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
+(38, '2022-04-07', 'ATSINANANA', 'Vatomandry', 'Marolambo', 'Vohitsara', 'CEF', 'CEF Vatomandry', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
+(39, '2022-04-07', 'ATSINANANA', 'Vatomandry', 'Marolambo', 'Ambalatenina', 'Amboditafara', 'BCM', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
+(40, '2022-04-07', 'ATSINANANA', 'Vatomandry', 'Marolambo', 'Ranomintina', 'Andraharahabe', 'BCM', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
+(41, '2022-04-07', 'ATSINANANA', 'Vatomandry', 'Marolambo', 'Antseranambe', 'Ambodiakondromena', 'BCM', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
+(42, '2022-04-07', 'ATSINANANA', '', 'Marolambo', 'Lanonana', 'Lanonana', 'VOI Dimbiazanjafy, Aspinall', NULL, '-18.732388889', '48.814250000', 0, '2021-2022', 9),
+(43, '2022-07-27', 'Menabe', 'Mahabo', 'Analamitsivalana', 'dfs', 'dfg', 'dfg', NULL, '0.000000000', '0.000000000', 255, '2022', 9);
 
 -- --------------------------------------------------------
 
@@ -2658,8 +2714,9 @@ INSERT INTO `pepiniere` (`id_pepiniere`, `dateRempl`, `region`, `district`, `com
 -- Structure de la table `planification`
 --
 
-CREATE TABLE `planification` (
-  `id` int(11) NOT NULL DEFAULT '0',
+DROP TABLE IF EXISTS `planification`;
+CREATE TABLE IF NOT EXISTS `planification` (
+  `id` int NOT NULL DEFAULT '0',
   `dateRemplissage` date DEFAULT NULL,
   `acteur` varchar(1000) DEFAULT NULL,
   `typeActeur` varchar(1000) DEFAULT NULL,
@@ -2674,10 +2731,10 @@ CREATE TABLE `planification` (
   `surfaceTotalPrevu` decimal(10,2) DEFAULT NULL,
   `mangroveOuTerrestre` varchar(255) DEFAULT NULL,
   `anneeRebois` varchar(10) DEFAULT NULL,
-  `users_id` int(11) DEFAULT NULL,
+  `users_id` int DEFAULT NULL,
   `latitude` decimal(11,7) NOT NULL,
   `longitude` decimal(11,7) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
 -- Déchargement des données de la table `planification`
@@ -2721,16 +2778,20 @@ INSERT INTO `planification` (`id`, `dateRemplissage`, `acteur`, `typeActeur`, `d
 -- Structure de la table `plant_mise_terre`
 --
 
-CREATE TABLE `plant_mise_terre` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `plant_mise_terre`;
+CREATE TABLE IF NOT EXISTS `plant_mise_terre` (
+  `id` int NOT NULL AUTO_INCREMENT,
   `dateRegister` date DEFAULT NULL,
   `nomScientifique` varchar(500) DEFAULT NULL,
   `nomVernaculaire` varchar(500) DEFAULT NULL,
-  `nombrePlantMiseEnTerre` int(11) DEFAULT NULL,
+  `nombrePlantMiseEnTerre` int DEFAULT NULL,
   `SourcePlant` varchar(500) DEFAULT NULL,
-  `reboisement_id` int(11) NOT NULL,
-  `users_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `reboisement_id` int NOT NULL,
+  `users_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `users_id` (`users_id`),
+  KEY `reboisement_id` (`reboisement_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3563 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Déchargement des données de la table `plant_mise_terre`
@@ -6311,10 +6372,12 @@ INSERT INTO `plant_mise_terre` (`id`, `dateRegister`, `nomScientifique`, `nomVer
 -- Structure de la table `preparation_sol`
 --
 
-CREATE TABLE `preparation_sol` (
-  `id` int(11) NOT NULL,
-  `preparationsol_libelle` varchar(250) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+DROP TABLE IF EXISTS `preparation_sol`;
+CREATE TABLE IF NOT EXISTS `preparation_sol` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `preparationsol_libelle` varchar(250) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Déchargement des données de la table `preparation_sol`
@@ -6331,8 +6394,9 @@ INSERT INTO `preparation_sol` (`id`, `preparationsol_libelle`) VALUES
 -- Structure de la table `reboisement`
 --
 
-CREATE TABLE `reboisement` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `reboisement`;
+CREATE TABLE IF NOT EXISTS `reboisement` (
+  `id` int NOT NULL AUTO_INCREMENT,
   `dateRemplissage` date DEFAULT NULL,
   `acteur` varchar(1000) DEFAULT NULL,
   `typeActeur` varchar(1000) DEFAULT NULL,
@@ -6347,18 +6411,24 @@ CREATE TABLE `reboisement` (
   `objectifReboisement` varchar(1000) DEFAULT NULL,
   `objectifRpf` varchar(1000) DEFAULT NULL,
   `Approche` varchar(1000) DEFAULT NULL,
-  `surfaceTotalPrevu` int(11) DEFAULT '0',
+  `surfaceTotalPrevu` int DEFAULT '0',
   `superficieRealise` decimal(10,4) NOT NULL DEFAULT '0.0000',
   `class_` varchar(1000) DEFAULT NULL,
   `mangroveOuTerrestre` varchar(255) DEFAULT NULL,
   `dateMiseEnTerre` date DEFAULT NULL,
   `anneeRebois` varchar(10) DEFAULT NULL,
-  `users_id` int(11) DEFAULT NULL,
-  `id_planification` int(11) DEFAULT NULL,
-  `financement` int(11) DEFAULT NULL,
+  `users_id` int DEFAULT NULL,
+  `id_planification` int DEFAULT NULL,
+  `financement` int DEFAULT NULL,
   `polygone` longtext,
-  `photoid` varchar(250) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `photoid` varchar(250) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `users_id` (`users_id`),
+  KEY `region` (`region`),
+  KEY `district` (`district`),
+  KEY `commune` (`commune`),
+  KEY `id_planification` (`id_planification`)
+) ENGINE=InnoDB AUTO_INCREMENT=1293 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Déchargement des données de la table `reboisement`
@@ -7308,7 +7378,11 @@ INSERT INTO `reboisement` (`id`, `dateRemplissage`, `acteur`, `typeActeur`, `dre
 (1284, '2022-06-15', 'VOI', 'VOI', 'DREDD MENABE', 'MENABE', 'Morondava', 'Bemanonga', 'Lovobe', 'Lovobe', 'Terrain public', 'VOI', 'Restauration Mangrove', '', '', 0, '7.5680', '0_10', 'Mangrove', '2022-04-01', '2021_2022', 9, NULL, NULL, NULL, NULL),
 (1285, '2022-06-15', 'VOI', 'VOI', 'DREDD MENABE', 'MENABE', 'Morondava', 'Bemanonga', 'Lovobe', 'Lovobe', 'Terrain public', 'VOI', 'Restauration Mangrove', '', '', 0, '12.7300', '10_100', 'Mangrove', '2022-04-06', '2021_2022', 9, NULL, NULL, NULL, NULL),
 (1286, '2022-06-15', 'VOI', 'VOI', 'DREDD MENABE', 'MENABE', 'Morondava', 'Bemanonga', 'Lovobe', 'Lovobe', 'Terrain public', 'VOI', 'Restauration Mangrove', '', '', 0, '89.1050', '10_100', 'Mangrove', '2022-04-07', '2021_2022', 9, NULL, NULL, NULL, NULL),
-(1287, '2022-06-15', 'VOI', 'VOI', 'DREDD MENABE', 'MENABE', 'Morondava', 'Bemanonga', 'Lovobe', 'Lovobe', 'Terrain public', 'VOI', 'Restauration Mangrove', '', '', 0, '75.1375', '10_100', 'Mangrove', '2022-02-08', '2021_2022', 9, NULL, NULL, NULL, NULL);
+(1287, '2022-06-15', 'VOI', 'VOI', 'DREDD MENABE', 'MENABE', 'Morondava', 'Bemanonga', 'Lovobe', 'Lovobe', 'Terrain public', 'VOI', 'Restauration Mangrove', '', '', 0, '75.1375', '10_100', 'Mangrove', '2022-02-08', '2021_2022', 9, NULL, NULL, NULL, NULL),
+(1289, NULL, NULL, NULL, NULL, 'Analamanga', 'Ambohidratrimo', 'Ambohidratrimo', 'Ambohidratrimo', 'Ambohidratrimo', 'prive', NULL, 'agroforesterie', 'production', 'Individuelle ', 1, '0.5000', '0_10', 'Terrestre', '2022-01-22', NULL, NULL, NULL, NULL, NULL, NULL),
+(1290, NULL, NULL, NULL, NULL, 'Analamanga', 'Antananarivo Renivohitra', '1er Arrondissement', 'Ankadivato', 'Neurone', 'public', NULL, 'agroforesterie', 'restauration', 'Communautaire', 1, '1.0000', '0_10', 'Terrestre', '2022-06-14', NULL, NULL, NULL, NULL, NULL, NULL),
+(1291, NULL, NULL, NULL, NULL, 'Analamanga', 'Antananarivo Renivohitra', '5e Arrondissement', 'Ankerana', 'Medd', 'prive', NULL, 'espace_vert', 'conservation', 'Individuelle', 0, '0.2000', '0_10', 'Terrestre', '2022-06-26', NULL, NULL, NULL, NULL, NULL, NULL),
+(1292, '2022-06-15', '1E1A', NULL, NULL, 'Analamanga', 'Antananarivo Renivohitra', '1er Arrondissement', 'A', 'A', 'communal', NULL, 'Protection des sols', 'Régulation', 'Industrielle', 0, '8.0000', '0_10', NULL, NULL, NULL, NULL, NULL, NULL, '-18.8760295 47.5507479 0.0 0.0;-18.878215548975415 47.5488355010748 0.0 0.0;-18.87632827102301 47.54745651036501 0.0 0.0;-18.873899428178543 47.54932869225741 0.0 0.0;-18.8760295 47.5507479 0.0 0.0', '1655304283448.jpg');
 
 -- --------------------------------------------------------
 
@@ -7316,10 +7390,12 @@ INSERT INTO `reboisement` (`id`, `dateRemplissage`, `acteur`, `typeActeur`, `dre
 -- Structure de la table `region`
 --
 
-CREATE TABLE `region` (
-  `id` int(11) NOT NULL,
-  `nom_region` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+DROP TABLE IF EXISTS `region`;
+CREATE TABLE IF NOT EXISTS `region` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nom_region` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Déchargement des données de la table `region`
@@ -7356,10 +7432,11 @@ INSERT INTO `region` (`id`, `nom_region`) VALUES
 -- Structure de la table `regionmap`
 --
 
-CREATE TABLE `regionmap` (
+DROP TABLE IF EXISTS `regionmap`;
+CREATE TABLE IF NOT EXISTS `regionmap` (
   `ID_REGION` varchar(6) CHARACTER SET utf8mb4 NOT NULL,
   `LIBELLE_REGION` varchar(250) CHARACTER SET utf8mb4 DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3;
 
 --
 -- Déchargement des données de la table `regionmap`
@@ -7395,12 +7472,14 @@ INSERT INTO `regionmap` (`ID_REGION`, `LIBELLE_REGION`) VALUES
 -- Structure de la table `role`
 --
 
-CREATE TABLE `role` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `role`;
+CREATE TABLE IF NOT EXISTS `role` (
+  `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `slug` varchar(255) NOT NULL,
-  `level` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `level` int NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Déchargement des données de la table `role`
@@ -7415,15 +7494,39 @@ INSERT INTO `role` (`id`, `name`, `slug`, `level`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `semis`
+--
+
+DROP TABLE IF EXISTS `semis`;
+CREATE TABLE IF NOT EXISTS `semis` (
+  `id_semis` int NOT NULL AUTO_INCREMENT,
+  `type_semis` varchar(255) NOT NULL,
+  PRIMARY KEY (`id_semis`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+
+--
+-- Déchargement des données de la table `semis`
+--
+
+INSERT INTO `semis` (`id_semis`, `type_semis`) VALUES
+(1, 'En pot '),
+(2, 'Semi direct'),
+(3, 'Germoir');
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `sujet_discussion`
 --
 
-CREATE TABLE `sujet_discussion` (
-  `ID_SUJET` int(11) NOT NULL,
-  `LIBELLE_SUJET` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+DROP TABLE IF EXISTS `sujet_discussion`;
+CREATE TABLE IF NOT EXISTS `sujet_discussion` (
+  `ID_SUJET` int NOT NULL AUTO_INCREMENT,
+  `LIBELLE_SUJET` varchar(500) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `DATE_SAISIE` datetime NOT NULL,
-  `UTILISATEUR` varchar(100) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `UTILISATEUR` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  KEY `ID_SUJET` (`ID_SUJET`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb3 ;
 
 --
 -- Déchargement des données de la table `sujet_discussion`
@@ -7443,13 +7546,15 @@ INSERT INTO `sujet_discussion` (`ID_SUJET`, `LIBELLE_SUJET`, `DATE_SAISIE`, `UTI
 -- Structure de la table `sujet_discussion_details`
 --
 
-CREATE TABLE `sujet_discussion_details` (
-  `ID_DISCUSSION` int(11) NOT NULL,
-  `UTILISATEUR` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `MESSAGE` varchar(4000) COLLATE utf8_unicode_ci NOT NULL,
+DROP TABLE IF EXISTS `sujet_discussion_details`;
+CREATE TABLE IF NOT EXISTS `sujet_discussion_details` (
+  `ID_DISCUSSION` int NOT NULL AUTO_INCREMENT,
+  `UTILISATEUR` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `MESSAGE` varchar(4000) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `DATE_SAISIE` datetime NOT NULL,
-  `ID_SUJET` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `ID_SUJET` int NOT NULL,
+  PRIMARY KEY (`ID_DISCUSSION`)
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb3 ;
 
 --
 -- Déchargement des données de la table `sujet_discussion_details`
@@ -7493,11 +7598,14 @@ INSERT INTO `sujet_discussion_details` (`ID_DISCUSSION`, `UTILISATEUR`, `MESSAGE
 -- Structure de la table `type_acteur`
 --
 
-CREATE TABLE `type_acteur` (
-  `ID_TYPE_ACTEUR` int(11) NOT NULL,
-  `LIBELLETYPE_ACTEUR` varchar(250) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `DESCRIPTION` varchar(250) COLLATE utf8_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+DROP TABLE IF EXISTS `type_acteur`;
+CREATE TABLE IF NOT EXISTS `type_acteur` (
+  `ID_TYPE_ACTEUR` int NOT NULL AUTO_INCREMENT,
+  `LIBELLETYPE_ACTEUR` varchar(250) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `DESCRIPTION` varchar(250) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`ID_TYPE_ACTEUR`),
+  KEY `ID_TYPE_ACTEUR` (`ID_TYPE_ACTEUR`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb3 ;
 
 --
 -- Déchargement des données de la table `type_acteur`
@@ -7520,17 +7628,21 @@ INSERT INTO `type_acteur` (`ID_TYPE_ACTEUR`, `LIBELLETYPE_ACTEUR`, `DESCRIPTION`
 -- Structure de la table `users`
 --
 
-CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` int NOT NULL AUTO_INCREMENT,
   `nom` varchar(255) DEFAULT NULL,
   `prenom` varchar(255) DEFAULT NULL,
   `identifiant` varchar(255) DEFAULT NULL,
   `mail` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
-  `confirme` int(11) DEFAULT NULL,
-  `id_diredd_dredd_ciredd` int(11) NOT NULL,
-  `role_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `confirme` int DEFAULT NULL,
+  `id_diredd_dredd_ciredd` int NOT NULL,
+  `role_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `role_id` (`role_id`),
+  KEY `id_diredd_dredd_ciredd` (`id_diredd_dredd_ciredd`)
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Déchargement des données de la table `users`
@@ -7556,23 +7668,8 @@ INSERT INTO `users` (`id`, `nom`, `prenom`, `identifiant`, `mail`, `password`, `
 -- Doublure de structure pour la vue `v_realisation`
 -- (Voir ci-dessous la vue réelle)
 --
-CREATE TABLE `v_realisation` (
-`acteur` varchar(1000)
-,`typeActeur` varchar(1000)
-,`objectifReboisement` varchar(1000)
-,`objectifRpf` varchar(1000)
-,`region` varchar(255)
-,`district` varchar(255)
-,`commune` varchar(255)
-,`nomScientifique` varchar(500)
-,`mangroveOuTerrestre` varchar(255)
-,`Approche` varchar(1000)
-,`NOMBRE_PLANTS` decimal(32,0)
-,`surfacePrevu` decimal(32,0)
-,`SourcePlant` varchar(500)
-,`superficieRealise` decimal(32,4)
-,`annee_reboisement` varchar(10)
-);
+DROP VIEW IF EXISTS `v_realisation`;
+
 
 -- --------------------------------------------------------
 
@@ -7581,347 +7678,8 @@ CREATE TABLE `v_realisation` (
 --
 DROP TABLE IF EXISTS `v_realisation`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`dcsiuser`@`localhost` SQL SECURITY DEFINER VIEW `v_realisation`  AS  select `a`.`acteur` AS `acteur`,`a`.`typeActeur` AS `typeActeur`,`c`.`objectifReboisement` AS `objectifReboisement`,`c`.`objectifRpf` AS `objectifRpf`,`a`.`region` AS `region`,`a`.`district` AS `district`,`a`.`commune` AS `commune`,`b`.`nomScientifique` AS `nomScientifique`,`a`.`mangroveOuTerrestre` AS `mangroveOuTerrestre`,`a`.`Approche` AS `Approche`,sum(`b`.`nombrePlantMiseEnTerre`) AS `NOMBRE_PLANTS`,sum(`a`.`surfaceTotalPrevu`) AS `surfacePrevu`,`b`.`SourcePlant` AS `SourcePlant`,sum(`a`.`superficieRealise`) AS `superficieRealise`,`a`.`anneeRebois` AS `annee_reboisement` from ((`reboisement` `a` left join `plant_mise_terre` `b` on((`a`.`id` = `b`.`reboisement_id`))) left join `planification` `c` on((`a`.`id_planification` = `c`.`id`))) group by `a`.`acteur`,`c`.`objectifReboisement`,`c`.`objectifRpf`,`a`.`region`,`a`.`district`,`a`.`commune`,`b`.`nomScientifique`,`a`.`mangroveOuTerrestre`,`a`.`Approche`,`a`.`anneeRebois` ;
-
---
--- Index pour les tables déchargées
---
-
---
--- Index pour la table `annee_reboisement`
---
-ALTER TABLE `annee_reboisement`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `apport_fertilisation`
---
-ALTER TABLE `apport_fertilisation`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `approche`
---
-ALTER TABLE `approche`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `class`
---
-ALTER TABLE `class`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `deletelog`
---
-ALTER TABLE `deletelog`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `diredd_dredd_ciredd`
---
-ALTER TABLE `diredd_dredd_ciredd`
-  ADD PRIMARY KEY (`id_diredd_dredd_ciredd`);
-
---
--- Index pour la table `diredd_dredd_ciredd_region`
---
-ALTER TABLE `diredd_dredd_ciredd_region`
-  ADD PRIMARY KEY (`id_diredd_dredd_ciredd_region`),
-  ADD KEY `id_diredd_dredd_ciredd` (`id_diredd_dredd_ciredd`),
-  ADD KEY `id_region` (`id_region`);
-
---
--- Index pour la table `district`
---
-ALTER TABLE `district`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `region_id` (`region_id`),
-  ADD KEY `nom_district` (`nom_district`);
-
---
--- Index pour la table `ecosysteme`
---
-ALTER TABLE `ecosysteme`
-  ADD PRIMARY KEY (`ID_ECOSYSTEME`);
-
---
--- Index pour la table `especes`
---
-ALTER TABLE `especes`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `essence_pepiniere_semi`
---
-ALTER TABLE `essence_pepiniere_semi`
-  ADD PRIMARY KEY (`id_essence_pepiniere`),
-  ADD KEY `users_id` (`users_id`),
-  ADD KEY `id_pepiniere` (`id_pepiniere`);
-
---
--- Index pour la table `essence_pepiniere_sorti`
---
-ALTER TABLE `essence_pepiniere_sorti`
-  ADD PRIMARY KEY (`id_essence_pepiniere`),
-  ADD KEY `id_pepiniere` (`id_pepiniere`);
-
---
--- Index pour la table `gpsrebois`
---
-ALTER TABLE `gpsrebois`
-  ADD PRIMARY KEY (`id_gpsrebois`),
-  ADD KEY `reboisement_id` (`reboisement_id`),
-  ADD KEY `users_id` (`users_id`);
-
---
--- Index pour la table `objectif_rpf`
---
-ALTER TABLE `objectif_rpf`
-  ADD PRIMARY KEY (`ID_OBJECTIF_RPF`);
-
---
--- Index pour la table `objectif_specifique`
---
-ALTER TABLE `objectif_specifique`
-  ADD PRIMARY KEY (`ID_OBJECTIF_SPECIFIQUE`);
-
---
--- Index pour la table `organisme_appui`
---
-ALTER TABLE `organisme_appui`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `pepiniere`
---
-ALTER TABLE `pepiniere`
-  ADD PRIMARY KEY (`id_pepiniere`),
-  ADD KEY `users_id` (`users_id`);
-
---
--- Index pour la table `plant_mise_terre`
---
-ALTER TABLE `plant_mise_terre`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `users_id` (`users_id`),
-  ADD KEY `reboisement_id` (`reboisement_id`);
-
---
--- Index pour la table `preparation_sol`
---
-ALTER TABLE `preparation_sol`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `reboisement`
---
-ALTER TABLE `reboisement`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `users_id` (`users_id`),
-  ADD KEY `region` (`region`),
-  ADD KEY `district` (`district`),
-  ADD KEY `commune` (`commune`),
-  ADD KEY `id_planification` (`id_planification`);
-
---
--- Index pour la table `region`
---
-ALTER TABLE `region`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `role`
---
-ALTER TABLE `role`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `sujet_discussion`
---
-ALTER TABLE `sujet_discussion`
-  ADD KEY `ID_SUJET` (`ID_SUJET`);
-
---
--- Index pour la table `sujet_discussion_details`
---
-ALTER TABLE `sujet_discussion_details`
-  ADD PRIMARY KEY (`ID_DISCUSSION`);
-
---
--- Index pour la table `type_acteur`
---
-ALTER TABLE `type_acteur`
-  ADD PRIMARY KEY (`ID_TYPE_ACTEUR`),
-  ADD KEY `ID_TYPE_ACTEUR` (`ID_TYPE_ACTEUR`);
-
---
--- Index pour la table `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `role_id` (`role_id`),
-  ADD KEY `id_diredd_dredd_ciredd` (`id_diredd_dredd_ciredd`);
-
---
--- AUTO_INCREMENT pour les tables déchargées
---
-
---
--- AUTO_INCREMENT pour la table `annee_reboisement`
---
-ALTER TABLE `annee_reboisement`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT pour la table `apport_fertilisation`
---
-ALTER TABLE `apport_fertilisation`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT pour la table `approche`
---
-ALTER TABLE `approche`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT pour la table `class`
---
-ALTER TABLE `class`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT pour la table `deletelog`
---
-ALTER TABLE `deletelog`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT pour la table `diredd_dredd_ciredd`
---
-ALTER TABLE `diredd_dredd_ciredd`
-  MODIFY `id_diredd_dredd_ciredd` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
-
---
--- AUTO_INCREMENT pour la table `diredd_dredd_ciredd_region`
---
-ALTER TABLE `diredd_dredd_ciredd_region`
-  MODIFY `id_diredd_dredd_ciredd_region` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
-
---
--- AUTO_INCREMENT pour la table `district`
---
-ALTER TABLE `district`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=115;
-
---
--- AUTO_INCREMENT pour la table `ecosysteme`
---
-ALTER TABLE `ecosysteme`
-  MODIFY `ID_ECOSYSTEME` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT pour la table `especes`
---
-ALTER TABLE `especes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=441;
-
---
--- AUTO_INCREMENT pour la table `essence_pepiniere_semi`
---
-ALTER TABLE `essence_pepiniere_semi`
-  MODIFY `id_essence_pepiniere` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT pour la table `essence_pepiniere_sorti`
---
-ALTER TABLE `essence_pepiniere_sorti`
-  MODIFY `id_essence_pepiniere` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT pour la table `gpsrebois`
---
-ALTER TABLE `gpsrebois`
-  MODIFY `id_gpsrebois` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT pour la table `objectif_rpf`
---
-ALTER TABLE `objectif_rpf`
-  MODIFY `ID_OBJECTIF_RPF` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT pour la table `objectif_specifique`
---
-ALTER TABLE `objectif_specifique`
-  MODIFY `ID_OBJECTIF_SPECIFIQUE` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
-
---
--- AUTO_INCREMENT pour la table `organisme_appui`
---
-ALTER TABLE `organisme_appui`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT pour la table `pepiniere`
---
-ALTER TABLE `pepiniere`
-  MODIFY `id_pepiniere` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
-
---
--- AUTO_INCREMENT pour la table `plant_mise_terre`
---
-ALTER TABLE `plant_mise_terre`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3563;
-
---
--- AUTO_INCREMENT pour la table `preparation_sol`
---
-ALTER TABLE `preparation_sol`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT pour la table `reboisement`
---
-ALTER TABLE `reboisement`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1289;
-
---
--- AUTO_INCREMENT pour la table `region`
---
-ALTER TABLE `region`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
-
---
--- AUTO_INCREMENT pour la table `role`
---
-ALTER TABLE `role`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT pour la table `sujet_discussion`
---
-ALTER TABLE `sujet_discussion`
-  MODIFY `ID_SUJET` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-
---
--- AUTO_INCREMENT pour la table `sujet_discussion_details`
---
-ALTER TABLE `sujet_discussion_details`
-  MODIFY `ID_DISCUSSION` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
-
---
--- AUTO_INCREMENT pour la table `type_acteur`
---
-ALTER TABLE `type_acteur`
-  MODIFY `ID_TYPE_ACTEUR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-
---
--- AUTO_INCREMENT pour la table `users`
---
-ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+DROP VIEW IF EXISTS `v_realisation`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`dcsiuser`@`localhost` SQL SECURITY DEFINER VIEW `v_realisation`  AS SELECT `a`.`acteur` AS `acteur`, `a`.`typeActeur` AS `typeActeur`, `c`.`objectifReboisement` AS `objectifReboisement`, `c`.`objectifRpf` AS `objectifRpf`, `a`.`region` AS `region`, `a`.`district` AS `district`, `a`.`commune` AS `commune`, `b`.`nomScientifique` AS `nomScientifique`, `a`.`mangroveOuTerrestre` AS `mangroveOuTerrestre`, `a`.`Approche` AS `Approche`, sum(`b`.`nombrePlantMiseEnTerre`) AS `NOMBRE_PLANTS`, sum(`a`.`surfaceTotalPrevu`) AS `surfacePrevu`, `b`.`SourcePlant` AS `SourcePlant`, sum(`a`.`superficieRealise`) AS `superficieRealise`, `a`.`anneeRebois` AS `annee_reboisement` FROM ((`reboisement` `a` left join `plant_mise_terre` `b` on((`a`.`id` = `b`.`reboisement_id`))) left join `planification` `c` on((`a`.`id_planification` = `c`.`id`))) GROUP BY `a`.`acteur`, `c`.`objectifReboisement`, `c`.`objectifRpf`, `a`.`region`, `a`.`district`, `a`.`commune`, `b`.`nomScientifique`, `a`.`mangroveOuTerrestre`, `a`.`Approche`, `a`.`anneeRebois` ;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
