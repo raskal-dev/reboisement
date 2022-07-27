@@ -45,7 +45,7 @@ require_once ('includes/navbar.php');
    <?php endif; ?>
  
 <div class="container-fluid">
-
+if(isset($_SESSION)){var_dump($_SESSION);}
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
 <div class="card-body">

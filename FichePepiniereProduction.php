@@ -6,9 +6,9 @@ $Fonction->logged_only();
 $Fonction->allow('member');
 
 
-$sql = "SELECT * FROM pepiniere ORDER BY site ASC";
-$req_pep = $db->prepare($sql);
-$req_pep->execute();
+$sql = "SELECT * FROM region ORDER BY nom_region ASC";
+$req_reg = $db->prepare($sql);
+$req_reg->execute();
 
 if ($Fonction->user('Level') != 3 || $Fonction->user('id_diredd_dredd_ciredd') != 21) {
   $id_diredd_dredd_ciredd = $Fonction->user('id_diredd_dredd_ciredd');
@@ -22,7 +22,12 @@ $sql1 .= "ORDER BY nom_diredd_dredd_ciredd ASC";
 $req1 = $db->prepare($sql1);
 $req1->execute();
 
-
+$sql2 = "SELECT * FROM type_acteur ORDER BY LIBELLETYPE_ACTEUR ASC";
+$req_typeact = $db->prepare($sql2);
+$req_typeact->execute();
+$sql3 = "SELECT * FROM especes ORDER BY especes_nom ASC";
+$req_espece = $db->prepare($sql3);
+$req_espece->execute();
 
 function fill_espece($db)
 {
@@ -38,22 +43,23 @@ function fill_espece($db)
   }
   return $output;
 }
+$sql4 = "SELECT * FROM pepiniere ORDER BY site ASC";
+$req_pep = $db->prepare($sql4);
+$req_pep->execute();
 
-function fill_typesemis($db)
+function type_acteur($db)
 {
-  $outputsemie = '';
-  $mot_cle = " select  *
-            from  semis  ORDER BY type_semis ASC
-           ";
-  $statement = $db->prepare($mot_cle);
+  $outputtype_acteur = '';
+  $sql_act = " select  *
+            from  type_acteur";
+  $statement = $db->prepare($sql_act);
   $statement->execute();
   $result = $statement->fetchAll(PDO::FETCH_ASSOC);
   foreach ($result as $row) {
-    $outputsemie .= '<option value="' . $row["type_semie"] . '">' . $row["type_semis"] . '</option>';
+    $outputtype_acteur .= '<option value="' . $row["ID_TYPE_ACTEUR"] . '">' . $row["LIBELLETYPE_ACTEUR"] . '</option>';
   }
-  return $outputsemie;
+  return $outputtype_acteur;
 }
-
 
 
 ?>
@@ -62,6 +68,7 @@ require_once('includes/header.php');
 require_once('includes/scripts.php');
 require_once('includes/navbar.php');
 ?>
+<?php /*if(isset($_SESSION)){var_dump($_SESSION);}*/?>
 <?php if (!empty($erreurs)) : ?>..
 <div class="alert alert-danger" id="messageFlash">
   <p>Vous n'avez pas rempli le formulaire correctement</p>
@@ -72,418 +79,321 @@ require_once('includes/navbar.php');
   </ul>
 </div>
 <?php endif; ?>
-
 <div class="container-fluid">
-  <!-- modifier ********************************************************************************************* -->
-  <!-- DataTales Example -->
   <div class="card shadow mb-4">
     <div class="card-body">
       <div class="starter-template">
         <div class="col-sm-12">
-          <form method="post" action="" id="insert">
             <span id="error"></span>
-            <h5><b>Fiche de collecte des productions des pépinières</b></h5>
+            <h5><b>Fiche de collecte des sorties des pépinières</b></h5>
 
             <br><br>
 
             <h5><b>SYSTÈME DE SUIVI DES ACTIVITÉS DE REBOISEMENT ET DE RESTAURATION DES PAYSAGES FORÊSTIERS À MADAGASCAR . MINISTÈRE DE L'ENVIRONNEMENT ET DU DÉVELOPPEMENT DURABLE - COLLECTE DES DONNÉES SUR LES PÉPINIÈRES - PRODUCTION</b></h5>
-            <!-- <div class="row">
-                 
-                 <div class="col-sm-3">
-                   <div class="form-group">
-                     <label>*NOM : </label>
-                     <input name="nom_prouction_p" type="text" class="form-control responsable" placeholder="Veuillez saisir votre nom ...">
-                    </div>
-                  </div>
-                  <div class="col-sm-3">
-                    <div class="form-group">
-                      <label>*NUMÉRO DE TÉLÉPHONE : </label>
-                      <input name="numero_production_p" type="text" class="form-control objectifReboisement" placeholder="Veuillez saisir votre numéro de téléphone ...">
-                    </div>
-                  </div>
-                </div>
-                
-                
-                <br>
-              <h5><b>Localisation</b></h5>
-               
-               <div class="row">
-                    <div class="col-sm-3">
-                        <div class="form-group">
-                           <label>Région : </label>
-                           <select name="region" type="text" class="form-control region" id="id_region">
-                              <option></option>
-                              
-                           </select>
-                        </div>
-                    </div>
-                    <div class="col-sm-3">
-                        <div class="form-group">
-                           <label>District : </label>
-                           <select name="district" class="form-control district" id="id_district">
-                              <option></option>
-                           </select>
-                        </div>
-                    </div>
-                    <div class="col-sm-3">
-                        <div class="form-group">
-                           <label>Commune : </label>
-                           <select name="commune" class="form-control commune" id="id_commune">
-                              <option></option>
-                           </select>
-                        </div>
-                    </div>
-                    <div class="col-sm-3">
-                        <div class="form-group">
-                            <label>Fokontany : </label>
-                            <input name="fokontany" type="text" class="form-control fokontany">
-                        </div>
-                    </div>
-                    <div class="col-sm-3">
-                        <div class="form-group">
-                            <label>Localité : </label>
-                            <input name="site" type="text" class="form-control site">
-                        </div>
-                    </div>
-                    <div class="col-sm-3">
-                        <div class="form-group">
-                            <label>Coordonnées X : </label>
-                            <input name="longitude" type="text" class="form-control longitude">
-                        </div>
-                    </div>
-                    <div class="col-sm-3">
-                        <div class="form-group">
-                            <label>Coordonnées Y : </label>
-                            <input name="latitude" type="text" class="form-control latitude">
-                        </div>
-                    </div>
-                </div>
- -->
-
-
             <br>
-
-
             <h5><b>Promoteur</b></h5>
             <div class="row">
+               
+                            <!--debut Modal -->
+            <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+              <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Nouveau Pépinière</h5>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">X</button>
+                  </div>
+                  <div class="modal-body">
 
-              <div class="col-sm-3">
-                <!-- <div class="form-group">
-                            <label>Nom Pépinière : </label>
-                            <input name="nom_pepiniere" type="text" class="form-control responsable"> -->
+
+                    <form action="" method="post">
+
+                      <h3>Délimitation Administrative</h3>
+
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <label for="region" class="form-group">Région :</label>
+                          <input type="text" name="region" id="region" class="form-control">
+                        </div>
+
+                        <div class="col-sm-3">
+                          <label for="district" class="form-group">District :</label>
+                          <input type="text" name="district" id="district" class="form-control">
+                        </div>
+
+                        <div class="col-sm-3">
+                          <label for="commune" class="form-group">commune :</label>
+                          <input type="text" name="commune" id="commune" class="form-control">
+                        </div>
+
+                        <div class="col-sm-3">
+                          <label for="site" class="form-group">Site :</label>
+                          <input type="text" name="site" id="site" class="form-control">
+                        </div>
+
+                        <div class="col-sm-3">
+                          <label for="cooX" class="form-group">Coordonnées X :</label>
+                          <input type="text" name="cooX" id="cooX" class="form-control">
+                        </div>
+
+                        <div class="col-sm-3">
+                          <label for="cooY" class="form-group">Coordonnées Y :</label>
+                          <input type="text" name="cooY" id="cooY" class="form-control">
+                        </div>
+
+                        <div class="col-sm-3">
+                          <label for="region" class="form-group">Région :</label>
+                          <input type="text" name="region" id="region" class="form-control">
+                        </div>
+                      </div>
+
+                      <br>
+
+                      <h3>Information sur la pepinière</h3>
+
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <label for="responsable" class="form-group">Responsable :</label>
+                          <input type="text" name="responsable" id="responsable" class="form-control">
+                        </div>
+
+                        <div class="col-sm-3">
+                          <label for="nbplatebande" class="form-group">Nombre de plate-bande :</label>
+                          <input type="text" name="nbplatebande" id="nbplatebande" class="form-control">
+                        </div>
+
+                        <div class="col-sm-3">
+                          <label for="anneexerc" class="form-group">Année de l'exercice :</label>
+                          <input type="text" name="anneexerc" id="anneexerc" class="form-control">
+                        </div>
+                        <div class="col-sm-3">
+                          <div class="form-group">
+                            <label for="type_acteur">TYPE ACTEUR</label>
+                            <select name="nom_pepiniere" type="text" class="form-control" id="id_region">
+                              <option></option>
+                              <?php echo type_acteur($db); ?>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-sm-3">
+                          <div class="form-group">
+                            <label for="responsable">Responsable Pepiniere</label>
+                            <input type="text" name="" id="responsable" class="form-control">
+                          </div>
+                        </div>
+                        <div class="col-sm-3">
+                          <div class="form-group">
+                            <label for="responsable">Contact Pepiniere</label>
+                            <input type="text" name="" id="contact-pep" class="form-control">
+
+
+                          </div>
+                        </div>
+                      </div>
+                    
+
+
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                    <button type="button" class="btn btn-primary">Enregistrer</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            </div>
+            </div>
+            </form>
+    <form method="post" action="" id="insert">
+    <div class="row">
+    <div class="col-sm-6">
                 <div class="form-group">
-                  <label>Nom Pépinière : </label>
-                  <select name="nom_pepiniere" type="text" class="form-control" id="id_region">
+                  <label>Nom Pépinière : <span class="col-sm-3" data-toggle="modal" data-target="#staticBackdrop"> <span class="btn btn-success mx-3" data-toggle="tooltip" data-placement="top" title="nouveau pepiniere"><span class="fa fa-plus"></span> </span></span> </label>
+
+                  <select name="id_pepiniere" type="text" class="form-control id_pepiniere">
+                  <option></option>
                     <?php while ($info = $req_pep->fetch(PDO::FETCH_ASSOC)) : ?>
                       <option value="<?= $info['id_pepiniere'] ?>"><?= $info['site'] ?></option>
                     <?php endwhile; ?>
                   </select>
                 </div>
-              </div>
-              <div class="col-sm-3">
-                <!-- Button trigger modal -->
-                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#staticBackdrop">
-                <span class="fa fa-plus">
-                </button>
+                </div>
+                </div>          
+                   <!-- fin modal -->
 
-                <!-- Modal -->
-                <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                  <div class="modal-dialog modal-xl">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="staticBackdropLabel">Nouveau Pépinière</h5>
-                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">X</button>
-                      </div>
-                      <div class="modal-body">
+            <h5><b>Information sur les Essences</b></h5>
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="scrollable">
+                  <table class="table table-bordered" id="item_table">
+                    <thead>
+                      <tr>
+                        <th>Espece</th>
+                        <th>Nombre repiqué/semi</th>
+                        <th>Nom beneficiaire</th>
+                        <th>Conctact deneficiaire</th>
+                        <th>Lieux rreboisement</th>
+                        <th>Date sortie</th>
+                        <th><button type="button" name="add" class="btn btn-success btn-sm add"><span class="fa fa-plus"></span></button></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <select name="espece[]" class="form-control espece">
+                            <option></option>
+                            <?php echo fill_espece($db); ?>
+                          </select>
+                        </td>
+                        <td><input name="nombrePlantSorti[]" type="text" class="form-control nombrePlantSorti"></td>
+                        <td><input name="nom_beneficiaire[]" type="text" class="form-control nom_beneficiaire"></td>
+                        <td><input name="contact_beneficiare[]" type="text" class="form-control contact_beneficiare"></td>
+                        <td><input name="lieu_reboisement[]" type="text" class="form-control lieu_reboisement"></td>
+                        <td><input name="dateSorti[]" type="date" class="form-control dateSorti"></td>
+                      </tr>
+                    </tbody>
+                  </table>
 
-
-                        <form action="" method="post">
-
-                          <h3>Délimitation Administrative</h3>
-
-                          <div class="row">
-                            <div class="col-sm-3">
-                              <label for="region" class="form-group">Région :</label>
-                              <input type="text" name="region" id="region" class="form-control">
-                            </div>
-
-                            <div class="col-sm-3">
-                              <label for="district" class="form-group">District :</label>
-                              <input type="text" name="district" id="district" class="form-control">
-                            </div>
-
-                            <div class="col-sm-3">
-                              <label for="commune" class="form-group">commune :</label>
-                              <input type="text" name="commune" id="commune" class="form-control">
-                            </div>
-
-                            <div class="col-sm-3">
-                              <label for="site" class="form-group">Site :</label>
-                              <input type="text" name="site" id="site" class="form-control">
-                            </div>
-
-                            <div class="col-sm-3">
-                              <label for="cooX" class="form-group">Coordonnées X :</label>
-                              <input type="text" name="cooX" id="cooX" class="form-control">
-                            </div>
-
-                            <div class="col-sm-3">
-                              <label for="cooY" class="form-group">Coordonnées Y :</label>
-                              <input type="text" name="cooY" id="cooY" class="form-control">
-                            </div>
-
-                            <div class="col-sm-3">
-                              <label for="region" class="form-group">Région :</label>
-                              <input type="text" name="region" id="region" class="form-control">
-                            </div>
-                          </div>
-
-                          <br>
-
-                          <h3>Information sur la pepinière</h3>
-
-                          <div class="row">
-                            <div class="col-sm-3">
-                              <label for="responsable" class="form-group">Responsable :</label>
-                              <input type="text" name="responsable" id="responsable" class="form-control">
-                            </div>
-
-                            <div class="col-sm-3">
-                              <label for="nbplatebande" class="form-group">Nombre de plate-bande :</label>
-                              <input type="text" name="nbplatebande" id="nbplatebande" class="form-control">
-                            </div>
-
-                            <div class="col-sm-3">
-                              <label for="anneexerc" class="form-group">Année de l'exercice :</label>
-                              <input type="text" name="anneexerc" id="anneexerc" class="form-control">
-                            </div>
-                          </div>
-
-                          <div class="ro">
-
-                            <h5><b>Information sur les Essences</b></h5>
-                            <div class="row">
-                              <div class="col-sm-12">
-                                <div class="scrollable">
-                                  <table class="table table-bordered" id="item_table">
-                                    <thead>
-                                      <tr>
-                                        <th>Espece</th>
-                                        <th>Type semis</th>
-                                        <th>Nombre Plants Produits</th>
-                                        <th>Date semis</th>
-                                        <th><button type="button" name="add" class="btn btn-success btn-sm add"><span class="fa fa-plus"></span></button></th>
-                                      </tr>
-                                    </thead>
-                                    <tbody>
-                                      <tr>
-                                        <td>
-                                          <select name="espece" class="form-control typeActeur" id="dispositiion">
-                                            <option></option>
-                                            <?php echo fill_espece($db); ?>
-                                          </select>
-                                        </td>
-                                        <td>
-                                          <select name="semis" class="form-control typesemis" id="dispositiion">
-                                            <option></option>
-                                            <?php echo fill_typesemis($db); ?>
-                                          </select>
-                                        </td>
-                                        <td><input name="nombrePlantSemi[]" type="text" class="form-control nombrePlantSemi"></td>
-                                        <td><input name="dateSemi[]" type="date" class="form-control dateSemi"></td>
-                                      </tr>
-                                    </tbody>
-                                  </table>
-                                </div>
-                              </div>
-                            </div>
-
-                          </div>
-
-
-
-                        </form>
-
-
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-                        <button type="button" class="btn btn-primary">Enregistrer</button>
-                      </div>
-                    </div>
-                  </div>
                 </div>
               </div>
-
+              <!-- success -->
             </div>
-            <!-- 
-                    <div class="col-sm-3">
-                        <div class="form-group">
-                            <label>Type Acteur : </label>
-                            <input name="typeacteur" type="text" class="form-control responsable">
-                        </div>
-                    </div>
-                    
-                    <div class="col-sm-3">
-                        <div class="form-group">
-                            <label>Responsable : </label>
-                            <input name="responsablePepiniere" type="text" class="form-control responsable">
-                        </div>
-                    </div>
-                    <div class="col-sm-3">
-                        <div class="form-group">
-                            <label>Contact Pépinièriste : </label>
-                            <input name="contact_pepinieriste" type="text" class="form-control objectifReboisement">
-                        </div>
-                    </div> -->
         </div>
 
-
-
-
-
-
-        <h5><b>Information sur les Essences</b></h5>
-        <div class="row">
-          <div class="col-sm-12">
-            <div class="scrollable">
-              <table class="table table-bordered" id="item_table">
-                <thead>
-                  <tr>
-                    <th>Espece</th>
-                    <th>Type semis</th>
-                    <th>Nombre Plants Produits</th>
-                    <th>Date semis</th>
-                    <th><button type="button" name="add" class="btn btn-success btn-sm add"><span class="fa fa-plus"></span></button></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>
-                      <select name="espece" class="form-control typeActeur" id="dispositiion">
-                        <option></option>
-                        <?php echo fill_espece($db); ?>
-                      </select>
-                    </td>
-                    <td>
-                      <select name="semis" class="form-control typesemis" id="dispositiion">
-                        <option></option>
-                        <?php echo fill_typesemis($db); ?>
-                      </select>
-                    </td>
-                    <td><input name="nombrePlantSemi[]" type="text" class="form-control nombrePlantSemi"></td>
-                    <td><input name="dateSemi[]" type="date" class="form-control dateSemi"></td>
-                  </tr>
-                </tbody>
-              </table>
-
-
-              <script>
-                $(document).ready(function() {
-                  $(document).on('click', '.add', function() {
-                    var html = '';
-                    html += '<tr>';
-                    html += '<td><select name="espece" class="form-control typeActeur" id="dispositiion"> <option></option><?php echo fill_espece($db); ?></select></td>';
-                    html += '<td><select name="semis" class="form-control semis" id="dispositiion"> <option></option><?php echo fill_typesemis($db); ?></select></td>';
-                    html += '<td><input name="nombrePlantSemi[]" type="text" class="form-control nombrePlantSemi"></td>';
-                    html += '<td><input name="dateSemi[]" type="date" class="form-control dateSemi"></td>';
-                    html += '<td><button type="button" name="remove" class="btn btn-danger btn-sm remove"><span class="fa fa-asterisk"></span></button></td></tr>';
-                    $('#item_table').append(html);
-                  });
-                  $(document).on('click', '.remove', function() {
-                    $(this).closest('tr').remove();
-                  });
-                  $('#submit').click(function(event) {
-
-
-                    var timer = setTimeout(cacher, 6000);
-                    $('#messageFlash').click(function() {
-                      clearTimeout(timer);
-                      $(this).hide(3000);
-                    });
-
-                    $("#close").click(function() {
-                      $('#erreur').hide();
-                    });
-
-                    function cacher() {
-                      $('#messageFlash').hide(6000);
-                    }
-
-                    event.preventDefault();
-                    var error = '';
-
-                    $('.region').each(function() {
-                      var count = 1;
-                      if ($(this).val() === '') {
-                        error += "<li>le champ  région ne doit pas être vide</li>";
-                        return false;
-                      }
-                      count = count + 1;
-                    });
-                    $('.anneeExercice').each(function() {
-                      var count = 1;
-                      if ($(this).val() === '') {
-                        error += "<li>le champ  année de l'exercice ne doit pas être vide</li>";
-                        return false;
-                      }
-                      count = count + 1;
-                    });
-                    $('.essence').each(function() {
-                      var count = 1;
-                      if ($(this).val() === '') {
-                        error += "<li>Un ou plusieurs champ(s) vide dans la colonne  essence</li>";
-                        return false;
-                      }
-                      count = count + 1;
-                    });
-                    $('.nombrePlantSemi').each(function() {
-                      var count = 1;
-                      if ($(this).val() === '') {
-                        error += "<li>Un ou plusieurs champ(s) vide dans la colonne  nombre semi</li>";
-                        return false;
-                      }
-                      count = count + 1;
-                    });
-
-                    if (error === '') {
-                      var insert = $('#insert')[0];
-                      var data = new FormData(insert);
-                      $.ajax({
-                        url: "insert_pepiniere.php",
-                        method: "POST",
-                        data: data,
-                        processData: false,
-                        contentType: false,
-                        cache: false,
-                        timeout: 600000,
-                        success: function(reponse) {
-                          alert("voulez-vous confirmer la commande?");
-                          $('#insert')[0].reset();
-                          $('#error').html('<div class="alert alert-success" id="messageFlash"><p><li>Informations insérées</li></p></div>');
-                          location.reload();
-                          return false;
-                        }
-                      });
-                    } else {
-                      $('#error').html('<div class="alert alert-danger" id="messageFlash">' + error + '</div>');
-                    }
-                  });
-                });
-              </script>
-
-
-              <div class="modal-footer">
-                <a type="button" class="btn btn-danger" href="pepiniere.php">Retour</a>
-                <input type="submit" id="submit" class="btn btn-success" value="Valider">
-              </div>
-            </div>
-          </div>
-        </div>
-        </form>
       </div>
+
+      <script>
+        $(document).ready(function() {
+          $(document).on('click', '.add', function() {
+            var html = '';
+            html += '<tr>';
+            html += '<td><select name="espece[]" class="form-control espece"> <option></option><?php echo fill_espece($db); ?></select></td>';
+            html += '<td><input name="nombrePlantSorti[]" type="text" class="form-control nombrePlantSorti"></td>';
+            html += '<td><input name="nom_beneficiaire[]" type="text" class="form-control nom_beneficiaire"></td>';
+            html += '<td><input name="contact_beneficiare[]" type="text" class="form-control contact_beneficiare"></td>';
+            html += '<td><input name="lieu_reboisement[]" type="text" class="form-control lieu_reboisement"></td>';
+            html += '<td><input name="dateSorti[]" type="date" class="form-control dateSorti"></td>';
+            html += '<td><button type="button" name="remove" class="btn btn-danger btn-sm remove"><span class="fa fa-asterisk"></span></button></td></tr>';
+            $('#item_table').append(html);
+          });
+          
+
+          $(document).on('click', '.remove', function() {
+            $(this).closest('tr').remove();
+          });
+
+          
+          $('#submit').click(function(event) {
+
+            var timer = setTimeout(cacher, 6000);
+            $('#messageFlash').click(function() {
+              clearTimeout(timer);
+              $(this).hide(3000);
+            });
+
+            $("#close").click(function() {
+              $('#erreur').hide();
+            });
+
+            function cacher() {
+              $('#messageFlash').hide(6000);
+            }
+
+            event.preventDefault();
+            var error = '';
+
+            $('.id_pepiniere').each(function() {
+              var count = 1;
+
+              if ($(this).val() === '') {
+                error += "<li>le champ  nom_pepiniere ne doit pas être vide</li>";
+                return false;
+              }
+              count = count + 1;
+            });
+            $('.espece').each(function() {
+              var count = 1;
+              if ($(this).val() === '') {
+                error += "<li>le champ  espece ne doit pas être vide</li>";
+                return false;
+              }
+              count = count + 1;
+            });
+            $('.nombrePlantSorti').each(function() {
+              var count = 1;
+              if ($(this).val() === '') {
+                error += "<li>le champ  nombre de plant semi ne doit pas être vide</li>";
+                return false;
+              }
+              count = count + 1;
+            });
+            $('.nom_beneficiaire').each(function() {
+              var count = 1;
+              if ($(this).val() === '') {
+                error += "<li>le champ  nom beneficiaire ne doit pas être vide</li>";
+                return false;
+              }
+              count = count + 1;
+            });
+            $('.contact_beneficiare').each(function() {
+              var count = 1;
+              if ($(this).val() === '') {
+                error += "<li>le champ  contact beneficiaire ne doit pas être vide</li>";
+                return false;
+              }
+              count = count + 1;
+            });
+            $('.lieu_reboisement').each(function() {
+              var count = 1;
+              if ($(this).val() === '') {
+                error += "<li>le champ  lieu reboisement ne doit pas être vide</li>";
+                return false;
+              }
+              count = count + 1;
+            });
+            $('.dateSorti').each(function() {
+              var count = 1;
+              if ($(this).val() === '') {
+                error += "<li>vous devez entrer une date</li>";
+                return false;
+              }
+              count = count + 1;
+            });
+            
+
+            if (error === '') {
+              var insert = $('#insert')[0];
+              var data = new FormData(insert);
+              $.ajax({
+                url: "insert_pepinieresortie.php",
+                method: "POST",
+                data: data,
+                processData: false,
+                contentType: false,
+                cache: false,
+                timeout: 600000,
+                success: function(reponse) {
+                  alert("voulez-vous confirmer la commande?");
+                  $('#insert')[0].reset();
+                        $('#error').html('<div class="alert alert-success" id="messageFlash"><p><li>Informations insérées</li></p></div>');
+                        location.reload();
+                        return false;
+                }
+              });
+            } else {
+              $('#error').html('<div class="alert alert-danger" id="messageFlash">' + error + '</div>');
+            }
+          });
+        });
+      </script>
+      <div class="modal-footer">
+        <a type="button" class="btn btn-danger" href="pepinieresortie.php">Retour</a>
+        <input type="submit" id="submit" class="btn btn-success" value="Valider">
+      </div>
+
+      </form>
     </div>
   </div>
+</div>
 </div>
 </div>
 
