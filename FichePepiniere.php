@@ -126,6 +126,9 @@ if (isset($_POST['submitmodal'])) {
   if (empty($_POST['site'])) {
     $erreurs['site'] = "Le champ site Pepiniere ne doit pas être vide !!!";
   }
+  if (empty($_POST['nombrePlatebande'])) {
+    $erreurs['nombrePlatebande'] = "Le champ Nombre de plate bande ne doit pas être vide !!!";
+  }
   if (empty($_POST['nom_pepiniere'])) {
     $erreurs['nom_pepiniere'] = "Le champ Nom pépinière ne doit pas être vide !!!";
   } else {
@@ -258,7 +261,7 @@ require_once('includes/navbar.php');
             <div class="row">
               <div class="col-sm-3">
                 <div class="form-group">
-                  <label>Région : </label>
+                  <label>(*)Région : </label>
                   <select name="region" type="text" class="form-control region" id="id_region">
                     <option></option>
                     <?php while ($info_reg = $req_reg->fetch(PDO::FETCH_ASSOC)) : ?>
@@ -269,7 +272,7 @@ require_once('includes/navbar.php');
               </div>
               <div class="col-sm-3">
                 <div class="form-group">
-                  <label>District : </label>
+                  <label>(*)District : </label>
                   <select name="district" class="form-control district" id="id_district">
                     <option></option>
                   </select>
@@ -277,7 +280,7 @@ require_once('includes/navbar.php');
               </div>
               <div class="col-sm-3">
                 <div class="form-group">
-                  <label>commune : </label>
+                  <label>(*)commune : </label>
                   <select name="commune" class="form-control commune" id="id_commune">
                     <option></option>
                   </select>
@@ -285,25 +288,25 @@ require_once('includes/navbar.php');
               </div>
               <div class="col-sm-3">
                 <div class="form-group">
-                  <label>fokontany : </label>
+                  <label>(*)fokontany : </label>
                   <input name="fokontany" type="text" class="form-control fokontany">
                 </div>
               </div>
               <div class="col-sm-3">
                 <div class="form-group">
-                  <label>Site : </label>
+                  <label>(*)Site : </label>
                   <input name="site" type="text" class="form-control site">
                 </div>
               </div>
               <div class="col-sm-3">
                 <div class="form-group">
-                  <label>Coordonnées X : </label>
+                  <label>(*)Coordonnées X : </label>
                   <input name="longitude" type="text" class="form-control longitude">
                 </div>
               </div>
               <div class="col-sm-3">
                 <div class="form-group">
-                  <label>Coordonnées Y : </label>
+                  <label>(*)Coordonnées Y : </label>
                   <input name="latitude" type="text" class="form-control latitude">
                 </div>
               </div>
@@ -313,7 +316,7 @@ require_once('includes/navbar.php');
 
               <div class="col-sm-3">
                 <div class="form-group">
-                  <label>Nom Pépinière : <a href="Fiche_nom_pepiniere.php"><span href="#" class="fa fa-pen"></span></a> </label>
+                  <label>(*)Nom Pépinière : <a href="Fiche_nom_pepiniere.php"><span href="#" class="fa fa-pen"></span></a> </label>
                   <select class="form-control nom_pepiniere" name="nom_pepiniere" id="nom_pepiniere">
                     <option></option>
                     <?php echo nom_pepiniere($db) ?>
@@ -323,7 +326,7 @@ require_once('includes/navbar.php');
 
               <div class="col-sm-3">
                 <div class="form-group">
-                  <label>Responsable : </label>
+                  <label>(*)Responsable : </label>
                   <input name="responsablePepiniere" type="text" class="form-control responsablePepiniere">
                 </div>
               </div>
@@ -337,7 +340,7 @@ require_once('includes/navbar.php');
 
               <div class="col-sm-3">
                 <div class="form-group">
-                  <label>Nombre de plate-bande : </label>
+                  <label>(*)Nombre de plate-bande : </label>
                   <input name="nombrePlatebande" type="text" class="form-control nombrePlatebande">
                 </div>
               </div>
