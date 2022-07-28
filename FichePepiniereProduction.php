@@ -241,6 +241,7 @@ require_once('includes/navbar.php');
             <div class="col-sm-3">
               <div class="form-group">
                 <label>Nom Pépinière :</label>
+                <span class="col-sm-3" data-toggle="modal" data-target="#staticBackdrop"> <span class="btn btn-success mx-3" data-toggle="tooltip" data-placement="top" title="nouveau pepiniere"><span class="fa fa-plus"></span></span></span>
 
                 <select name="id_pepiniere" type="text" class="form-control id_pepiniere">
                   <option></option>
@@ -250,29 +251,10 @@ require_once('includes/navbar.php');
                 </select>
               </div>
             </div>
-            <div class="col-sm-3">
-              <div class="form-group">
-                <label for="type_acteur">TYPE ACTEUR</label>
-                <select name="type_acteur" type="text" class="form-control type_acteur">
-                  <option></option>
-                  <?php echo type_acteur2($db); ?>
-                </select>
-              </div>
-            </div>
-            <span class="col-sm-3" data-toggle="modal" data-target="#staticBackdrop"> <span class="btn btn-success mx-3" data-toggle="tooltip" data-placement="top" title="nouveau pepiniere"><span class="fa fa-plus"></span></span></span>
+            
           </div>
 
-          <div class="row">
-            <div class="col-sm-3">
-              <label for="responsable">Responsable : </label>
-              <input type="text" name="responsable" id="responsable" class="form-control responsable">
-            </div>
-
-            <div class="col-sm-3">
-              <label for="contact_pepineriste">Contact responsable pépinière : </label>
-              <input type="text" name="contact_pepineriste" id="contact_pepineriste" class="form-control contact_pepineriste">
-            </div>
-          </div>
+          
 
           <h5><b>Information sur les Essences</b></h5>
           <div class="row">
@@ -364,22 +346,6 @@ require_once('includes/navbar.php');
             }
             count = count + 1;
           });
-          $('.type_acteur').each(function() {
-            var count = 1;
-            if ($(this).val() === '') {
-              error += "<li>le champ Type acteur ne doit pas être vide</li>";
-              return false;
-            }
-            count = count + 1;
-          });
-          $('.responsable').each(function() {
-            var count = 1;
-            if ($(this).val() === '') {
-              error += "<li>le champ  résponsable ne doit pas être vide</li>";
-              return false;
-            }
-            count = count + 1;
-          });
           $('.essence').each(function() {
             var count = 1;
             if ($(this).val() === '') {
@@ -408,15 +374,6 @@ require_once('includes/navbar.php');
             var count = 1;
             if ($(this).val() === '') {
               error += "<li>le champ nombre plant semi ne doit pas être vide</li>";
-              return false;
-            }
-            count = count + 1;
-          });
-
-          $('.contact_pepineriste').each(function() {
-            var count = 1;
-            if ($(this).val() === '') {
-              error += "<li>le champ contact ne doit pas être vide</li>";
               return false;
             }
             count = count + 1;
