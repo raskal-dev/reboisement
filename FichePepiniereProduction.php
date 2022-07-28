@@ -9,18 +9,8 @@ $Fonction->allow('member');
 $sql = "SELECT * FROM region ORDER BY nom_region ASC";
 $req_reg = $db->prepare($sql);
 $req_reg->execute();
-
-if ($Fonction->user('Level') != 3 || $Fonction->user('id_diredd_dredd_ciredd') != 21) {
-  $id_diredd_dredd_ciredd = $Fonction->user('id_diredd_dredd_ciredd');
-}
-
-$sql1 = "SELECT * FROM diredd_dredd_ciredd ";
-if ($Fonction->user('Level') != 3 || $Fonction->user('id_diredd_dredd_ciredd') != 21) {
-  $sql1 .= "WHERE id_diredd_dredd_ciredd= '" . $id_diredd_dredd_ciredd . "' ";
-}
-$sql1 .= "ORDER BY nom_diredd_dredd_ciredd ASC";
-$req1 = $db->prepare($sql1);
-$req1->execute();
+// novana *************************************************************************
+$id_diredd_dredd_ciredd=$_SESSION['authentifier']['id_diredd_dredd_ciredd'];
 
 $sql2 = "SELECT * FROM type_acteur ORDER BY LIBELLETYPE_ACTEUR ASC";
 $req_typeact = $db->prepare($sql2);
@@ -43,10 +33,14 @@ function fill_espece($db)
   }
   return $output;
 }
-$sql4 = "SELECT * FROM pepiniere ORDER BY site ASC";
+$sql4 = "SELECT * FROM pepiniere 
+LEFT JOIN region on region.nom_region=pepiniere.region
+LEFT JOIN diredd_dredd_ciredd_region on diredd_dredd_ciredd_region.id_region=region.id 
+WHERE diredd_dredd_ciredd_region.id_diredd_dredd_ciredd='".$id_diredd_dredd_ciredd."'
+ORDER BY site ASC ";
 $req_pep = $db->prepare($sql4);
 $req_pep->execute();
-
+// ****************************************************************************************************************
 function type_acteur($db)
 {
   $outputtype_acteur = '';
@@ -56,24 +50,11 @@ function type_acteur($db)
   $statement->execute();
   $result = $statement->fetchAll(PDO::FETCH_ASSOC);
   foreach ($result as $row) {
-    $outputtype_acteur .= '<option value="' . $row["ID_TYPE_ACTEUR"] . '">' . $row["LIBELLETYPE_ACTEUR"] . '</option>';
+    $outputtype_acteur .= '<option value="' . $row["LIBELLETYPE_ACTEUR"] . '">' . $row["LIBELLETYPE_ACTEUR"] . '</option>';
   }
   return $outputtype_acteur;
 }
 
-function type_acteur2($db)
-{
-  $outputtype_acteur2 = '';
-  $sql_act = " select  *
-            from  type_acteur";
-  $statement = $db->prepare($sql_act);
-  $statement->execute();
-  $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-  foreach ($result as $row) {
-    $outputtype_acteur2 .= '<option value="' . $row["ID_TYPE_ACTEUR"] . '">' . $row["LIBELLETYPE_ACTEUR"] . '</option>';
-  }
-  return $outputtype_acteur2;
-}
 
 function nom_pepiniere($db)
 {
@@ -89,6 +70,7 @@ function nom_pepiniere($db)
   return $output;
 }
 
+
 function type_semi($db)
 {
   $outputtype_semi = '';
@@ -103,6 +85,7 @@ function type_semi($db)
   return $outputtype_semi;
 }
 
+// existance
 
 if(isset($_POST['submitmodal']))
 {
@@ -122,11 +105,52 @@ if(isset($_POST['submitmodal']))
   if (empty($_POST['responsablePepiniere'])) {
     $erreurs['responsablePepiniere']="Le champ responsable Pepiniere ne doit pas être vide !!!";
   }
+  if (empty($_POST['site'])) {
+    $erreurs['site']="Le champ site Pepiniere ne doit pas être vide !!!";
+  }
   if (empty($_POST['nom_pepiniere'])) {
     $erreurs['nom_pepiniere']="Le champ Nom pépinière ne doit pas être vide !!!";
+  }else{
+    $insert_region1=trim($Fonction->secure($_POST['region']));
+    $insert_district1=trim($Fonction->secure($_POST['district']));
+    $insert_commune1=trim($Fonction->secure($_POST['commune']));
+    
+    $sql_region1="SELECT * FROM region WHERE id=?";
+    $req_region1=$db->prepare($sql_region1);
+    $req_region1->execute([$insert_region1]);
+    $info_region1=$req_region1->fetch(PDO::FETCH_ASSOC);
+    $region1=$info_region1['nom_region'];
+    
+    $sql_district1="SELECT * FROM district WHERE id=?";
+    $req_district1=$db->prepare($sql_district1);
+    $req_district1->execute([$insert_district1]);
+    $info_district1=$req_district1->fetch(PDO::FETCH_ASSOC);
+    $district1=$info_district1['nom_district'];
+    
+    $sql_commune1="SELECT * FROM commune WHERE id=?";
+    $req_commune1=$db->prepare($sql_commune1);
+    $req_commune1->execute([$insert_commune1]);
+    $info_commune1=$req_commune1->fetch(PDO::FETCH_ASSOC);
+    $commune1=$info_commune1['nom_commune'];
+    $sql="SELECT * FROM pepiniere WHERE region=:region AND district=:district AND commune=:commune AND fokontany=:fokontany AND site=:site AND nom_pepiniere=:nom_pepiniere";
+
+    $req_exist=$db->prepare($sql);
+    $req_exist->execute(array(
+                "region" => $region1,
+                "district" => $district1,
+                "commune" => $commune1,
+                "fokontany" => $_POST['fokontany'],
+                "site" => $_POST['site'],
+                "nom_pepiniere" => $_POST['nom_pepiniere']
+        ));
+
+    $ligne_exist=$req_exist->rowCount();
+    if ($ligne_exist) {
+      $erreurs['nom_pepiniere']="Le pépinière existe déjà";
+    }
   }
 
-  
+
 
   if(empty($erreurs)){
     $insert_region=trim($Fonction->secure($_POST['region']));
@@ -159,10 +183,11 @@ if(isset($_POST['submitmodal']))
     $nombrePlatebande=trim($Fonction->secure($_POST['nombrePlatebande']));
     $contact_responsable=trim($Fonction->secure($_POST['contact_responsable']));
     $nom_pepiniere=trim($Fonction->secure($_POST['nom_pepiniere']));
+    $type_acteur=trim($Fonction->secure($_POST['type_acteur']));
     $users_id=$Fonction->user('id');
     
     
-    $sql_rbsmt="INSERT INTO `pepiniere`(`dateRempl`, `region`, `district`, `commune`, `fokontany`, `site`, `nom_pepiniere`, `contact_responsable`,  `longitude`, `latitude`, `responsablePepiniere`,`nombrePlatebande`, `users_id`) VALUES (NOW(), :region, :district, :commune, :fokontany, :site, :nom_pepiniere, :contact_responsable, :longitude, :latitude, :responsablePepiniere, :nombrePlatebande, :users_id)";
+    $sql_rbsmt="INSERT INTO `pepiniere`(`dateRempl`, `region`, `district`, `commune`, `fokontany`, `site`, `nom_pepiniere`, `contact_responsable`,`type_acteur`,  `longitude`, `latitude`, `responsablePepiniere`,`nombrePlatebande`, `users_id`) VALUES (NOW(), :region, :district, :commune, :fokontany, :site, :nom_pepiniere, :contact_responsable, :type_acteur, :longitude, :latitude, :responsablePepiniere, :nombrePlatebande, :users_id)";
     $req_rbsmt=$db->prepare($sql_rbsmt);
     $req_rbsmt->execute(array(
                 "region" => $region,
@@ -172,6 +197,7 @@ if(isset($_POST['submitmodal']))
                 "site" => $site,
                 "nom_pepiniere" => $nom_pepiniere,
                 "contact_responsable" => $contact_responsable,
+                "type_acteur" => $type_acteur,
                 "longitude" => $longitude,
                 "latitude" => $latitude,
                 "responsablePepiniere" => $responsablePepiniere,
@@ -184,7 +210,7 @@ if(isset($_POST['submitmodal']))
 
     
 }
-
+// fin insertion de modal
 ?>
 <?php
 require_once('includes/header.php');
@@ -315,7 +341,17 @@ require_once('includes/navbar.php');
                                         <label>Nom Pépinière : </label>
                                         <select class="form-control nom_pepiniere" name="nom_pepiniere" id="nom_pepiniere">
                                           <option></option>
-                                        <?php echo nom_pepiniere($db) ?>
+                                        <?= nom_pepiniere($db) ?>
+                                        </select>
+                                      </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                      <div class="form-group">
+                                        <label>Type Acteur : </label>
+                                        <select class="form-control type_acteur" name="type_acteur" id="type_acteur">
+                                          <option></option>
+                                        <?= type_acteur($db) ?>
                                         </select>
                                       </div>
                                     </div>
@@ -362,7 +398,7 @@ require_once('includes/navbar.php');
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-danger" data-dismiss="modal">Retour</button>
-                        <input type="submit" name="submitmodal" class="btn btn-success" value="Valider">
+                        <input type="submit" name="submitmodal" class="btn btn-success" value="Valider" onclick="return(confirm('Etes-vous sûr de vouloir confirmer la commande'));">
                     </div>
                 </div>
               </div>
@@ -556,7 +592,6 @@ require_once('includes/navbar.php');
     <div class="modal-footer">
       <a type="button" class="btn btn-danger" href="pepinieresortie.php">Retour</a>
       <input type="submit" id="submit" class="btn btn-success" value="Valider">
-      <input type="submit" name="valider" class="btn btn-success" value="Valider">
     </div>
 
     </form>
