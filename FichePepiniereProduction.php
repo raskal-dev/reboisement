@@ -75,6 +75,20 @@ function type_acteur2($db)
   return $outputtype_acteur2;
 }
 
+function nom_pepiniere($db)
+{
+  $output = '';
+  $sql_act = " select  *
+            from  nom_pepiniere";
+  $statement = $db->prepare($sql_act);
+  $statement->execute();
+  $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+  foreach ($result as $row) {
+    $output .= '<option value="' . $row["nom_pep"] . '">' . $row["nom_pep"] . '</option>';
+  }
+  return $output;
+}
+
 function type_semi($db)
 {
   $outputtype_semi = '';
@@ -90,6 +104,87 @@ function type_semi($db)
 }
 
 
+if(isset($_POST['submitmodal']))
+{
+  $erreurs=array();
+  if (empty($_POST['region'])) {
+    $erreurs['region']="Le champ region ne doit pas être vide !!!";
+  }
+  if (empty($_POST['district'])) {
+    $erreurs['district']="Le champ district ne doit pas être vide !!!";
+  }
+  if (empty($_POST['commune'])) {
+    $erreurs['commune']="Le champ commune ne doit pas être vide !!!";
+  }
+  if (empty($_POST['fokontany'])) {
+    $erreurs['fokontany']="Le champ fokontany ne doit pas être vide !!!";
+  }
+  if (empty($_POST['responsablePepiniere'])) {
+    $erreurs['responsablePepiniere']="Le champ responsable Pepiniere ne doit pas être vide !!!";
+  }
+  if (empty($_POST['nom_pepiniere'])) {
+    $erreurs['nom_pepiniere']="Le champ Nom pépinière ne doit pas être vide !!!";
+  }
+
+  
+
+  if(empty($erreurs)){
+    $insert_region=trim($Fonction->secure($_POST['region']));
+    $insert_district=trim($Fonction->secure($_POST['district']));
+    $insert_commune=trim($Fonction->secure($_POST['commune']));
+    
+    $sql_region="SELECT * FROM region WHERE id=?";
+    $req_region=$db->prepare($sql_region);
+    $req_region->execute([$insert_region]);
+    $info_region=$req_region->fetch(PDO::FETCH_ASSOC);
+    $region=$info_region['nom_region'];
+    
+    $sql_district="SELECT * FROM district WHERE id=?";
+    $req_district=$db->prepare($sql_district);
+    $req_district->execute([$insert_district]);
+    $info_district=$req_district->fetch(PDO::FETCH_ASSOC);
+    $district=$info_district['nom_district'];
+    
+    $sql_commune="SELECT * FROM commune WHERE id=?";
+    $req_commune=$db->prepare($sql_commune);
+    $req_commune->execute([$insert_commune]);
+    $info_commune=$req_commune->fetch(PDO::FETCH_ASSOC);
+    $commune=$info_commune['nom_commune'];
+    
+    $fokontany=trim($Fonction->secure($_POST['fokontany']));
+    $site=trim($Fonction->secure($_POST['site']));
+    $longitude=trim($Fonction->secure($_POST['longitude']));
+    $latitude=trim($Fonction->secure($_POST['latitude']));
+    $responsablePepiniere=trim($Fonction->secure($_POST['responsablePepiniere']));
+    $nombrePlatebande=trim($Fonction->secure($_POST['nombrePlatebande']));
+    $contact_responsable=trim($Fonction->secure($_POST['contact_responsable']));
+    $nom_pepiniere=trim($Fonction->secure($_POST['nom_pepiniere']));
+    $users_id=$Fonction->user('id');
+    
+    
+    $sql_rbsmt="INSERT INTO `pepiniere`(`dateRempl`, `region`, `district`, `commune`, `fokontany`, `site`, `nom_pepiniere`, `contact_responsable`,  `longitude`, `latitude`, `responsablePepiniere`,`nombrePlatebande`, `users_id`) VALUES (NOW(), :region, :district, :commune, :fokontany, :site, :nom_pepiniere, :contact_responsable, :longitude, :latitude, :responsablePepiniere, :nombrePlatebande, :users_id)";
+    $req_rbsmt=$db->prepare($sql_rbsmt);
+    $req_rbsmt->execute(array(
+                "region" => $region,
+                "district" => $district,
+                "commune" => $commune,
+                "fokontany" => $fokontany,
+                "site" => $site,
+                "nom_pepiniere" => $nom_pepiniere,
+                "contact_responsable" => $contact_responsable,
+                "longitude" => $longitude,
+                "latitude" => $latitude,
+                "responsablePepiniere" => $responsablePepiniere,
+                "nombrePlatebande" => $nombrePlatebande,
+                "users_id"=>$users_id
+        ));    
+        header('location:FichePepiniereProduction.php');
+        exit();
+  }
+
+    
+}
+
 ?>
 <?php
 require_once('includes/header.php');
@@ -99,6 +194,7 @@ require_once('includes/navbar.php');
 
 <!-- debug de var_dump -->
 <?php /*if(isset($_SESSION)){var_dump($_SESSION);}*/ ?>
+<div class="container-fluid">
 <?php if (!empty($erreurs)) : ?>..
 <div class="alert alert-danger" id="messageFlash">
   <p>Vous n'avez pas rempli le formulaire correctement</p>
@@ -109,7 +205,7 @@ require_once('includes/navbar.php');
   </ul>
 </div>
 <?php endif; ?>
-<div class="container-fluid">
+
   <div class="card shadow mb-4">
     <div class="card-body">
       <div class="starter-template">
@@ -123,110 +219,151 @@ require_once('includes/navbar.php');
           <br>
           <h5><b>Promoteur</b></h5>
           <div class="row">
-
+          <form action="" method="post">
             <!--debut Modal -->
-            <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal fade" id="staticBackdrop" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
               <div class="modal-dialog modal-xl">
                 <div class="modal-content">
                   <div class="modal-header">
                     <h5 class="modal-title" id="staticBackdropLabel">Nouveau Pépinière</h5>
                     <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">X</button>
                   </div>
-                  <div class="modal-body">
 
 
-                    <form action="" method="post">
+                  
+                    <div class="modal-body">
 
-                      <h3>Délimitation Administrative</h3>
+                      <div class="container-fluid">
 
-                      <div class="row">
-                        <div class="col-sm-3">
-                          <label for="region" class="form-group">Région :</label>
-                          <input type="text" name="region" id="region" class="form-control">
-                        </div>
 
-                        <div class="col-sm-3">
-                          <label for="district" class="form-group">District :</label>
-                          <input type="text" name="district" id="district" class="form-control">
-                        </div>
 
-                        <div class="col-sm-3">
-                          <label for="commune" class="form-group">commune :</label>
-                          <input type="text" name="commune" id="commune" class="form-control">
-                        </div>
 
-                        <div class="col-sm-3">
-                          <label for="site" class="form-group">Site :</label>
-                          <input type="text" name="site" id="site" class="form-control">
-                        </div>
 
-                        <div class="col-sm-3">
-                          <label for="cooX" class="form-group">Coordonnées X :</label>
-                          <input type="text" name="cooX" id="cooX" class="form-control">
-                        </div>
 
-                        <div class="col-sm-3">
-                          <label for="cooY" class="form-group">Coordonnées Y :</label>
-                          <input type="text" name="cooY" id="cooY" class="form-control">
-                        </div>
 
-                        <div class="col-sm-3">
-                          <label for="region" class="form-group">Région :</label>
-                          <input type="text" name="region" id="region" class="form-control">
+
+                        <!-- debut donnée et form modal -->
+
+
+                        <?php /* if(isset($_SESSION)){var_dump($_SESSION);} */ ?>
+                        <!-- DataTales Example -->
+                        <div class="card shadow mb-4">
+                          <div class="card-body">
+                            <div class="starter-template">
+                              <div class="col-sm-12">
+                                <form method="post" action="" id="insert">
+                                  <span id="error"></span>
+                                  <h5><b>Délimitation Administrative</b></h5>
+                                  <div class="row">
+                                    <div class="col-sm-3">
+                                      <div class="form-group">
+                                        <label>Région : </label>
+                                        <select name="region" type="text" class="form-control region" id="id_region">
+                                          <option></option>
+                                          <?php while ($info_reg = $req_reg->fetch(PDO::FETCH_ASSOC)) : ?>
+                                            <option value="<?= $info_reg['id'] ?>"><?= $info_reg['nom_region'] ?></option>
+                                          <?php endwhile; ?>
+                                        </select>
+                                      </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                      <div class="form-group">
+                                        <label>District : </label>
+                                        <select name="district" class="form-control district" id="id_district">
+                                          <option></option>
+                                        </select>
+                                      </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                      <div class="form-group">
+                                        <label>commune : </label>
+                                        <select name="commune" class="form-control commune" id="id_commune">
+                                          <option></option>
+                                        </select>
+                                      </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                      <div class="form-group">
+                                        <label>fokontany : </label>
+                                        <input name="fokontany" type="text" class="form-control fokontany">
+                                      </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                      <div class="form-group">
+                                        <label>Site : </label>
+                                        <input name="site" type="text" class="form-control site">
+                                      </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                      <div class="form-group">
+                                        <label>Coordonnées X : </label>
+                                        <input name="longitude" type="text" class="form-control longitude">
+                                      </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                      <div class="form-group">
+                                        <label>Coordonnées Y : </label>
+                                        <input name="latitude" type="text" class="form-control latitude">
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <h5><b>Information sur la pepinière</b></h5>
+                                  <div class="row">
+
+                                    <div class="col-sm-3">
+                                      <div class="form-group">
+                                        <label>Nom Pépinière : </label>
+                                        <select class="form-control nom_pepiniere" name="nom_pepiniere" id="nom_pepiniere">
+                                          <option></option>
+                                        <?php echo nom_pepiniere($db) ?>
+                                        </select>
+                                      </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                      <div class="form-group">
+                                        <label>Responsable : </label>
+                                        <input name="responsablePepiniere" type="text" class="form-control responsablePepiniere">
+                                      </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                      <div class="form-group">
+                                        <label>Contact Responsable : </label>
+                                        <input name="contact_responsable" type="text" class="form-control contact_responsable">
+                                      </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                      <div class="form-group">
+                                        <label>Nombre de plate-bande : </label>
+                                        <input name="nombrePlatebande" type="text" class="form-control nombrePlatebande">
+                                      </div>
+                                    </div>
+
+
+                                  </div>
+
+
+
+
+
+
+                                </form>
+                              </div>
+                            </div>
+                          </div>
                         </div>
                       </div>
 
-                      <br>
-
-                      <h3>Information sur la pepinière</h3>
-
-                      <div class="row">
-                        <div class="col-sm-3">
-                          <label for="responsable" class="form-group">Responsable :</label>
-                          <input type="text" name="responsable" id="responsable" class="form-control">
-                        </div>
-
-                        <div class="col-sm-3">
-                          <label for="nbplatebande" class="form-group">Nombre de plate-bande :</label>
-                          <input type="text" name="nbplatebande" id="nbplatebande" class="form-control">
-                        </div>
-
-                        <div class="col-sm-3">
-                          <label for="anneexerc" class="form-group">Année de l'exercice :</label>
-                          <input type="text" name="anneexerc" id="anneexerc" class="form-control">
-                        </div>
-                        <div class="col-sm-3">
-                          <div class="form-group">
-                            <label for="type_acteur">TYPE ACTEUR</label>
-                            <select name="type_acteur" type="text" class="form-control">
-                              <option></option>
-                              <?php echo type_acteur2($db); ?>
-                            </select>
-                          </div>
-                        </div>
-                        <div class="col-sm-3">
-                          <div class="form-group">
-                            <label for="responsable">Responsable Pepiniere</label>
-                            <input type="text" name="" id="responsable" class="form-control">
-                          </div>
-                        </div>
-                        <div class="col-sm-3">
-                          <div class="form-group">
-                            <label for="responsable">Contact Pepiniere</label>
-                            <input type="text" name="" id="contact-pep" class="form-control">
+                      <!-- fin donnée et form modal -->
 
 
-                          </div>
-                        </div>
-                      </div>
-
-
-
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-                    <button type="button" class="btn btn-primary">Enregistrer</button>
-                  </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-danger" data-dismiss="modal">Retour</button>
+                        <input type="submit" name="submitmodal" class="btn btn-success" value="Valider">
+                    </div>
                 </div>
               </div>
             </div>
@@ -234,6 +371,17 @@ require_once('includes/navbar.php');
         </div>
         </form>
         <!-- fin modal -->
+
+
+
+
+
+
+
+
+
+
+
 
 
         <form method="post" action="insert_pepiniereproduction.php" id="insert">
@@ -251,10 +399,10 @@ require_once('includes/navbar.php');
                 </select>
               </div>
             </div>
-            
+
           </div>
 
-          
+
 
           <h5><b>Information sur les Essences</b></h5>
           <div class="row">

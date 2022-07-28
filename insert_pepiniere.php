@@ -35,11 +35,10 @@ if(isset($_POST['essence']))
     $latitude=trim($Fonction->secure($_POST['latitude']));
     $responsablePepiniere=trim($Fonction->secure($_POST['responsablePepiniere']));
     $nombrePlatebande=trim($Fonction->secure($_POST['nombrePlatebande']));
-    $anneeExercice=trim($Fonction->secure($_POST['anneeExercice']));
     $users_id=$Fonction->user('id');
     
     
-    $sql_rbsmt="INSERT INTO `pepiniere`(`dateRempl`, `region`, `district`, `commune`, `fokontany`, `site`,  `longitude`, `latitude`, `responsablePepiniere`, `nombrePlatebande`, `anneeExercice`, `users_id`) VALUES (NOW(), :region, :district, :commune, :fokontany, :site,  :longitude, :latitude, :responsablePepiniere, :nombrePlatebande,:anneeExercice, :users_id)";
+    $sql_rbsmt="INSERT INTO `pepiniere`(`dateRempl`, `region`, `district`, `commune`, `fokontany`, `site`,  `longitude`, `latitude`, `responsablePepiniere`, `nombrePlatebande`, `users_id`) VALUES (NOW(), :region, :district, :commune, :fokontany, :site,  :longitude, :latitude, :responsablePepiniere, :nombrePlatebande, :users_id)";
     $req_rbsmt=$db->prepare($sql_rbsmt);
     $req_rbsmt->execute(array(
                 "region" => $region,
@@ -51,7 +50,6 @@ if(isset($_POST['essence']))
                 "latitude" => $latitude,
                 "responsablePepiniere" => $responsablePepiniere,
                 "nombrePlatebande" => $nombrePlatebande,
-                "anneeExercice" => $anneeExercice,
                 "users_id"=>$users_id
         ));
     $id_pepiniere=$db->lastInsertId();

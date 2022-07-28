@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once 'includes/function.php';
-require_once'includes/db.php';
+require_once 'includes/db.php';
 $Fonction->logged_only();
 $Fonction->allow('member');
 unset($_SESSION['id_stocks']);
@@ -287,7 +287,7 @@ if(isset($_POST['upload_excel']))
 
                if($region!="" && $id_pepiniere!="" && $annee!="" && !$info_id_pep['id_pepiniere'])
                {
-                  $sql="INSERT INTO `pepiniere`(`id_pepiniere`, `dateRempl`, `region`, `district`, `commune`, `fokontany`, `site`, `responsablePepiniere`, `longitude`, `latitude`, `nombrePlatebande`, `anneeExercice`, `users_id`) VALUES ('$id_pepiniere',NOW(),'$region','$district','$commune','$fokontany','$site','$responsablePepiniere','$longitude','$latitude','$nombrePlatebande','$annee','$users_id') ";
+                  $sql="INSERT INTO `pepiniere`(`id_pepiniere`, `dateRempl`, `region`, `district`, `commune`, `fokontany`, `site`, `responsablePepiniere`, `longitude`, `latitude`, `nombrePlatebande`, `users_id`) VALUES ('$id_pepiniere',NOW(),'$region','$district','$commune','$fokontany','$site','$responsablePepiniere','$longitude','$latitude','$nombrePlatebande','$annee','$users_id') ";
                   $req=$db->prepare($sql);
                   $req->execute();
                   $_SESSION['flash']['success']='Fichier Importé avec succès!';
@@ -475,7 +475,6 @@ require_once ('includes/navbar.php');
                             <td>
                                  <b>Responsable pépinière:</b> <?=$donnee->responsablePepiniere?></br>
                                  <b>Nombre plate-bande:</b> <?=$donnee->nombrePlatebande?></br>
-                                 <b>Année de l'Exercice:</b> <?=$donnee->anneeExercice?>
                            </td>
                             <td><a class="btn btn-success btn-sm" href="detailPepiniere.php?PEP_id=<?=$donnee->PEP_id ?>" style="border-radius: 2em;font-size: xx-small"><span class="fas fa-file"></span></a>
 
