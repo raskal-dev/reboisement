@@ -384,7 +384,7 @@ require_once ('includes/navbar.php');
 <!-- DataTales Example -->
 <div class="card shadow mb-4 mt-4">
    <div class="row">
-      <div class="col-sm-6">
+      <!-- <div class="col-sm-6">
          <h6 class=" ml-4">&nbsp;&nbsp;&nbsp;Importation Fichier Pepinière
             <form action=" " method="post" enctype="multipart/form-data">
                   <input name="result_file"  required=""  type="file" class="btn btn-default btn-sm" accept=".xlsx,.xls">
@@ -399,7 +399,7 @@ require_once ('includes/navbar.php');
                   <button type="submit" name="upload_excel2" class="btn btn-primary btn-sm ml-2"> Upload Excel</button>
              </form>
          </h6>
-      </div>
+      </div> -->
    </div>
 <div class="card-body scrollable" id="acceuil">
 

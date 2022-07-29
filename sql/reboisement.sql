@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 4.7.9
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : mer. 27 juil. 2022 à 12:01
--- Version du serveur : 8.0.27
--- Version de PHP : 8.0.13
+-- Généré le :  ven. 29 juil. 2022 à 02:17
+-- Version du serveur :  5.7.21
+-- Version de PHP :  7.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -18,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données : `reboisement`
+-- Base de données :  `reboisement`
 --
 
 -- --------------------------------------------------------
@@ -29,12 +30,12 @@ SET time_zone = "+00:00";
 
 DROP TABLE IF EXISTS `annee_reboisement`;
 CREATE TABLE IF NOT EXISTS `annee_reboisement` (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `periode` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `date_debut` date NOT NULL,
   `date_fin` date NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3 ;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `annee_reboisement`
@@ -51,10 +52,10 @@ INSERT INTO `annee_reboisement` (`id`, `periode`, `date_debut`, `date_fin`) VALU
 
 DROP TABLE IF EXISTS `apport_fertilisation`;
 CREATE TABLE IF NOT EXISTS `apport_fertilisation` (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `apportfertilisation_libelle` varchar(250) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `apport_fertilisation`
@@ -72,10 +73,10 @@ INSERT INTO `apport_fertilisation` (`id`, `apportfertilisation_libelle`) VALUES
 
 DROP TABLE IF EXISTS `approche`;
 CREATE TABLE IF NOT EXISTS `approche` (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `libelle` varchar(250) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `approche`
@@ -95,10 +96,10 @@ INSERT INTO `approche` (`id`, `libelle`) VALUES
 
 DROP TABLE IF EXISTS `class`;
 CREATE TABLE IF NOT EXISTS `class` (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `class` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `class`
@@ -117,11 +118,11 @@ INSERT INTO `class` (`id`, `class`) VALUES
 
 DROP TABLE IF EXISTS `commune`;
 CREATE TABLE IF NOT EXISTS `commune` (
-  `id` int NOT NULL,
-  `district_id` int NOT NULL,
+  `id` int(11) NOT NULL,
+  `district_id` int(11) NOT NULL,
   `nom_commune` varchar(255) DEFAULT NULL,
   `nom_district` varchar(250) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `commune`
@@ -1716,8 +1717,8 @@ INSERT INTO `commune` (`id`, `district_id`, `nom_commune`, `nom_district`) VALUE
 
 DROP TABLE IF EXISTS `deletelog`;
 CREATE TABLE IF NOT EXISTS `deletelog` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `reboisement_id` int NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `reboisement_id` int(11) NOT NULL,
   `deletedate` date DEFAULT NULL,
   `deleteuser` varchar(500) DEFAULT NULL,
   `acteur` varchar(1000) DEFAULT NULL,
@@ -1742,7 +1743,7 @@ CREATE TABLE IF NOT EXISTS `deletelog` (
   `dateMiseEnTerre` date DEFAULT NULL,
   `anneeRebois` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `deletelog`
@@ -1759,7 +1760,7 @@ INSERT INTO `deletelog` (`id`, `reboisement_id`, `deletedate`, `deleteuser`, `ac
 
 DROP TABLE IF EXISTS `diredd_dredd_ciredd`;
 CREATE TABLE IF NOT EXISTS `diredd_dredd_ciredd` (
-  `id_diredd_dredd_ciredd` int NOT NULL AUTO_INCREMENT,
+  `id_diredd_dredd_ciredd` int(11) NOT NULL AUTO_INCREMENT,
   `nom_diredd_dredd_ciredd` varchar(255) DEFAULT NULL,
   `sigle` varchar(255) NOT NULL,
   `sign` varchar(10) DEFAULT NULL,
@@ -1803,9 +1804,9 @@ INSERT INTO `diredd_dredd_ciredd` (`id_diredd_dredd_ciredd`, `nom_diredd_dredd_c
 
 DROP TABLE IF EXISTS `diredd_dredd_ciredd_region`;
 CREATE TABLE IF NOT EXISTS `diredd_dredd_ciredd_region` (
-  `id_diredd_dredd_ciredd_region` int NOT NULL AUTO_INCREMENT,
-  `id_diredd_dredd_ciredd` int NOT NULL,
-  `id_region` int NOT NULL,
+  `id_diredd_dredd_ciredd_region` int(11) NOT NULL AUTO_INCREMENT,
+  `id_diredd_dredd_ciredd` int(11) NOT NULL,
+  `id_region` int(11) NOT NULL,
   PRIMARY KEY (`id_diredd_dredd_ciredd_region`),
   KEY `id_diredd_dredd_ciredd` (`id_diredd_dredd_ciredd`),
   KEY `id_region` (`id_region`)
@@ -1873,14 +1874,14 @@ INSERT INTO `diredd_dredd_ciredd_region` (`id_diredd_dredd_ciredd_region`, `id_d
 
 DROP TABLE IF EXISTS `district`;
 CREATE TABLE IF NOT EXISTS `district` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `region_id` int NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `region_id` int(11) NOT NULL,
   `nom_district` varchar(255) DEFAULT NULL,
   `region_libelle` varchar(250) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `region_id` (`region_id`),
   KEY `nom_district` (`nom_district`)
-) ENGINE=InnoDB AUTO_INCREMENT=115 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=115 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `district`
@@ -2010,10 +2011,10 @@ INSERT INTO `district` (`id`, `region_id`, `nom_district`, `region_libelle`) VAL
 
 DROP TABLE IF EXISTS `ecosysteme`;
 CREATE TABLE IF NOT EXISTS `ecosysteme` (
-  `ID_ECOSYSTEME` int NOT NULL AUTO_INCREMENT,
+  `ID_ECOSYSTEME` int(11) NOT NULL AUTO_INCREMENT,
   `LIBELLE_ECOSYSTEME` varchar(250) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`ID_ECOSYSTEME`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3 ;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `ecosysteme`
@@ -2031,10 +2032,10 @@ INSERT INTO `ecosysteme` (`ID_ECOSYSTEME`, `LIBELLE_ECOSYSTEME`) VALUES
 
 DROP TABLE IF EXISTS `especes`;
 CREATE TABLE IF NOT EXISTS `especes` (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `especes_nom` varchar(250) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=441 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=441 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `especes`
@@ -2490,25 +2491,28 @@ INSERT INTO `especes` (`id`, `especes_nom`) VALUES
 
 DROP TABLE IF EXISTS `essence_pepiniere_semi`;
 CREATE TABLE IF NOT EXISTS `essence_pepiniere_semi` (
-  `id_essence_pepiniere` int NOT NULL AUTO_INCREMENT,
-  `dateRegist` date DEFAULT NULL,
+  `id_essence_pepiniere` int(11) NOT NULL AUTO_INCREMENT,
   `dateSemi` date DEFAULT NULL,
+  `type_semi` varchar(255) DEFAULT NULL,
   `essence` varchar(500) DEFAULT NULL,
-  `nombrePlantSemi` int DEFAULT NULL,
-  `id_pepiniere` int NOT NULL,
-  `users_id` int NOT NULL,
+  `nombrePlantSemi` int(11) DEFAULT NULL,
+  `id_pepiniere` int(11) NOT NULL,
+  `users_id` int(11) NOT NULL,
   PRIMARY KEY (`id_essence_pepiniere`),
   KEY `users_id` (`users_id`),
   KEY `id_pepiniere` (`id_pepiniere`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `essence_pepiniere_semi`
 --
 
-INSERT INTO `essence_pepiniere_semi` (`id_essence_pepiniere`, `dateRegist`, `dateSemi`, `essence`, `nombrePlantSemi`, `id_pepiniere`, `users_id`) VALUES
-(1, '2022-07-27', '2022-07-12', 'dfg', 200, 43, 9),
-(2, '2022-07-27', '2022-07-29', 'dfg', 300, 43, 9);
+INSERT INTO `essence_pepiniere_semi` (`id_essence_pepiniere`, `dateSemi`, `type_semi`, `essence`, `nombrePlantSemi`, `id_pepiniere`, `users_id`) VALUES
+(1, '2022-06-28', 'En pot', 'Acacia Luceana', 234, 5, 9),
+(2, '2022-06-29', 'En pot', 'Acacia auriculiformis', 145, 5, 9),
+(3, '2022-06-30', 'Semi direct', 'prosopsis', 456, 5, 9),
+(4, '2022-07-01', 'Germoir', 'Girofle', 56, 5, 9),
+(5, '2022-07-02', 'Semi direct', 'Orangier', 16, 5, 9);
 
 -- --------------------------------------------------------
 
@@ -2518,17 +2522,17 @@ INSERT INTO `essence_pepiniere_semi` (`id_essence_pepiniere`, `dateRegist`, `dat
 
 DROP TABLE IF EXISTS `essence_pepiniere_sorti`;
 CREATE TABLE IF NOT EXISTS `essence_pepiniere_sorti` (
-  `id_essence_pepiniere` int NOT NULL AUTO_INCREMENT,
+  `id_essence_pepiniere` int(11) NOT NULL AUTO_INCREMENT,
   `dateSorti` date DEFAULT NULL,
-  `espece` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `nombrePlantSorti` int DEFAULT NULL,
-  `nom_beneficiaire` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `contact_beneficiare` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `lieu_reboisement` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `id_pepiniere` int NOT NULL,
+  `espece` varchar(500) DEFAULT NULL,
+  `nombrePlantSorti` int(11) DEFAULT NULL,
+  `nom_beneficiaire` varchar(255) DEFAULT NULL,
+  `contact_beneficiare` varchar(10) DEFAULT NULL,
+  `lieu_reboisement` varchar(255) DEFAULT NULL,
+  `id_pepiniere` int(11) NOT NULL,
   PRIMARY KEY (`id_essence_pepiniere`),
   KEY `id_pepiniere` (`id_pepiniere`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -2538,16 +2542,16 @@ CREATE TABLE IF NOT EXISTS `essence_pepiniere_sorti` (
 
 DROP TABLE IF EXISTS `gpsrebois`;
 CREATE TABLE IF NOT EXISTS `gpsrebois` (
-  `id_gpsrebois` int NOT NULL AUTO_INCREMENT,
+  `id_gpsrebois` int(11) NOT NULL AUTO_INCREMENT,
   `dateInsert` date DEFAULT NULL,
   `latitude` decimal(11,9) DEFAULT NULL,
   `longitude` decimal(11,9) DEFAULT NULL,
-  `users_id` int NOT NULL,
-  `reboisement_id` int NOT NULL,
+  `users_id` int(11) NOT NULL,
+  `reboisement_id` int(11) NOT NULL,
   PRIMARY KEY (`id_gpsrebois`),
   KEY `reboisement_id` (`reboisement_id`),
   KEY `users_id` (`users_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `gpsrebois`
@@ -2562,15 +2566,463 @@ INSERT INTO `gpsrebois` (`id_gpsrebois`, `dateInsert`, `latitude`, `longitude`, 
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `nom_pepiniere`
+--
+
+DROP TABLE IF EXISTS `nom_pepiniere`;
+CREATE TABLE IF NOT EXISTS `nom_pepiniere` (
+  `id_nompep` int(11) NOT NULL AUTO_INCREMENT,
+  `nom_pep` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id_nompep`)
+) ENGINE=MyISAM AUTO_INCREMENT=441 DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `nom_pepiniere`
+--
+
+INSERT INTO `nom_pepiniere` (`id_nompep`, `nom_pep`) VALUES
+(2, 'Enceinte SOCOTA/COTONA'),
+(1, 'andranomainty'),
+(5, 'Ambahivahibe'),
+(6, 'Ambakirano'),
+(7, 'Ambakoana'),
+(8, 'Ambalabe'),
+(9, 'Ambalabe Befanjava'),
+(10, 'Ambalafary'),
+(11, 'Ambalakida'),
+(12, 'Ambalamahasoa'),
+(13, 'Ambalamahogo'),
+(14, 'Ambalamanasa'),
+(15, 'Ambalapaiso II'),
+(16, 'Ambalarano'),
+(17, 'Ambalavontaka'),
+(18, 'Ambalavy'),
+(19, 'Ambalirao'),
+(20, 'Ambaniandrefana'),
+(21, 'Ambanikibo'),
+(22, 'Ambanizana'),
+(23, 'Ambarimaninga'),
+(24, 'Ambaromihambana'),
+(25, 'Ambato Ambarimay'),
+(26, 'Ambatoaranana'),
+(27, 'Ambatobe'),
+(28, 'Ambatobe rive Nord'),
+(29, 'Ambatobe rive Sud'),
+(30, 'Ambatolaidama'),
+(31, 'Ambatomanjaka'),
+(32, 'Ambatomilona'),
+(33, 'Ambavarano,Ampondrahazo'),
+(34, 'Ambendragna'),
+(35, 'Ambery'),
+(36, 'Ambesisika'),
+(37, 'Ambiky'),
+(38, 'Ambinanindrano'),
+(39, 'Ambinda'),
+(40, 'Amboafandra'),
+(41, 'Amboavorikely'),
+(42, 'Amboavory'),
+(43, 'Amboboka'),
+(44, 'Ambodiampana'),
+(45, 'Ambodiara Homby'),
+(46, 'Ambodidivaina'),
+(47, 'Ambodimanga'),
+(48, 'Ambodimanga Pk4'),
+(49, 'Ambodimanga Pk5'),
+(50, 'Ambodimanga Pk6'),
+(51, 'Ambodimanga, sahasifotro, sakaramy centre'),
+(52, 'Ambodimangan\'i Bôra'),
+(53, 'Ambodipaiso'),
+(54, 'Ambodipont Limite'),
+(55, 'Ambodirafia'),
+(56, 'Ambodirano'),
+(57, 'Ambodisatrana'),
+(58, 'Amboditavolo'),
+(59, 'Ambodivato'),
+(60, 'Ambodivoasary'),
+(61, 'Ambohibary'),
+(62, 'Ambohibory'),
+(63, 'Ambohidava'),
+(64, 'Ambohimahavelo'),
+(65, 'Ambohimanarivo'),
+(66, 'Ambohimanarivo Mangaika'),
+(67, 'Ambohimandroso'),
+(68, 'Ambohipaky'),
+(69, 'Ambohipasika'),
+(70, 'Ambohitralanana'),
+(71, 'Ambohitrova'),
+(72, 'Ambohitsilaozana'),
+(73, 'Ambolipamba'),
+(74, 'Ambolomadinika'),
+(75, 'Ambondromamy'),
+(76, 'Ambongamarina'),
+(77, 'Amboniriana'),
+(78, 'Amboraka'),
+(79, 'Amboronana'),
+(80, 'Amborondra'),
+(81, 'Ambotaka'),
+(82, 'Ambovon\'i Tabera'),
+(83, 'Ampahana'),
+(84, 'Ampamoho'),
+(85, 'Ampanasana'),
+(86, 'Ampanatsovana'),
+(87, 'Ampanefena'),
+(88, 'Ampanihy'),
+(89, 'Ampanilahy'),
+(90, 'Amparafaravolakely'),
+(91, 'Amparatsiraka'),
+(92, 'Ampasibengy MNP Ankarana'),
+(93, 'Ampasimandroro'),
+(94, 'Ampasimatera'),
+(95, 'Ampasimazava'),
+(96, 'Ampasimbe Manatsatrana'),
+(97, 'Ampasimbola parcelle N° 19'),
+(98, 'Ampasindava, Andranotsimaty, Andranomavo'),
+(99, 'Ampasipotsy'),
+(100, 'Ampataka'),
+(101, 'Ampisarahana'),
+(102, 'Ampoahantsatroka'),
+(103, 'Ampohibe'),
+(104, 'Ampondra'),
+(105, 'Ampotaka, Itomboina, Efoetse'),
+(106, 'Ampotamalandy'),
+(107, 'Ampotsehy'),
+(108, 'Anaborano Ifasy'),
+(109, 'Anahidrano'),
+(110, 'Analalava'),
+(111, 'Analamangahazo'),
+(112, 'Analamisampy'),
+(113, 'Analamitsivalana'),
+(114, 'Analatsara'),
+(115, 'Ananjavidy'),
+(116, 'Anaviavimasina'),
+(117, 'Anbriky'),
+(118, 'Andalamahitsy'),
+(119, 'Andamasina Parcelle N° 08'),
+(120, 'Ansampin\'Ifosa'),
+(121, 'Andapa II'),
+(122, 'Andatsakala'),
+(123, 'Andavadoake'),
+(124, 'Andika sur mer'),
+(125, 'Andilambe'),
+(126, 'Andilamena'),
+(127, 'Andilamena II'),
+(128, 'Andilamena III'),
+(129, 'Andiolava'),
+(130, 'Andohaviana/Bepeha/Betankilotra'),
+(131, 'Andohazompona,LA SALINE'),
+(132, 'Andrafia'),
+(133, 'Andrafialava'),
+(134, 'Andrafiatoka'),
+(135, 'Andramasina'),
+(136, 'Andrampengy'),
+(137, 'Andrangazaha'),
+(138, 'Andranoboka'),
+(139, 'Andranofasika'),
+(140, 'Andranomamy'),
+(141, 'Andranomanitra'),
+(142, 'Andranomena'),
+(143, 'Andranomihoatra'),
+(144, 'Andranonapela'),
+(145, 'Andranotsara'),
+(146, 'Andranovao'),
+(147, 'Andranovato'),
+(148, 'Andratamarina'),
+(149, 'Andratany'),
+(150, 'Andreba'),
+(151, 'Andrebakely Sud'),
+(152, 'Andriana Ambony'),
+(153, 'Androka'),
+(154, 'Androrangavola Tsienta'),
+(155, 'Angodongodo'),
+(156, 'Anjagoveratra'),
+(157, 'Anjaraday, Ambiky, Tameantsoa, Beantake, Ampasindava, Anjambalo, Anadabolava'),
+(158, 'Anjiahely'),
+(159, 'Anjiajia'),
+(160, 'Anjiamangotroko'),
+(161, 'Anjinjanaomby'),
+(162, 'Anjinjaomby'),
+(163, 'Anjirohasina'),
+(164, 'Ankaboka'),
+(165, 'Ankalalo'),
+(166, 'Ankaraobato'),
+(167, 'Ankazobetsihay'),
+(168, 'Ankazomborona'),
+(169, 'Anketrakabe'),
+(170, 'Ankevaheva'),
+(171, 'Ankiabe'),
+(172, 'Ankijabe'),
+(173, 'Ankirenambe'),
+(174, 'Ankirihitra'),
+(175, 'Ankisatra'),
+(176, 'Ankitsika'),
+(177, 'Ankitsinambo'),
+(178, 'Ankivalo'),
+(179, 'Ankivo'),
+(180, 'Ankoalabe'),
+(181, 'Ankorefo'),
+(182, 'Anosinalainolona'),
+(183, 'Anosovelo/Ankarena'),
+(184, 'Antanalabe'),
+(185, 'Antanamandririna'),
+(186, 'Antanambao'),
+(187, 'Antanambao Andranasana'),
+(188, 'Antanana Agnabo'),
+(189, 'Antanananivo'),
+(190, 'Antanandava'),
+(191, 'Antanandehibe'),
+(192, 'Antanandrangady'),
+(193, 'Antanimenabaka'),
+(194, 'Antaranarina'),
+(195, 'Antaravato'),
+(196, 'Antekoho'),
+(197, 'Antohomaro'),
+(198, 'Antongomena Bevary'),
+(199, 'Antsahabe et Fotsialanana'),
+(200, 'Antsahalalina'),
+(201, 'Antsahamaina'),
+(202, 'Antsaidoha Bebao'),
+(203, 'Antsalova'),
+(204, 'Antsalova Centre'),
+(205, 'Antsaribô'),
+(206, 'Antseranamborondolo'),
+(207, 'Antseva'),
+(208, 'Antsoatany'),
+(209, 'Antsoha, Beroboka Nord, Marofandilia'),
+(210, 'Atsimondrano'),
+(211, 'Atsindra'),
+(212, 'Atsotso'),
+(213, 'Avaradrova'),
+(214, 'Beangona'),
+(215, 'Bebaboky Sud'),
+(216, 'Bedamena'),
+(217, 'Befingotra, Manantenina, Andasibe Mahaverika'),
+(218, 'Befoza'),
+(219, 'Bekopaky'),
+(220, 'Bekotrôbaka'),
+(221, 'Belalanda'),
+(222, 'Belita Andaboly'),
+(223, 'Belobaka'),
+(224, 'Belongoza'),
+(225, 'Bemasoandro Parcelle N° 02'),
+(226, 'Bemboza'),
+(227, 'Bemokotra'),
+(228, 'Benavony'),
+(229, 'Benihaonana'),
+(230, 'Beravina'),
+(231, 'Berevo Ranobe'),
+(232, 'Beroboka,Bemanonga'),
+(233, 'Beronono'),
+(234, 'Béryl, Enceinte du Bureau CEF'),
+(235, 'Besalampy'),
+(236, 'Besalampy Bas'),
+(237, 'Besariaka'),
+(238, 'Betahitra'),
+(239, 'Betanatanana'),
+(240, 'Betania'),
+(241, 'Betatao, Beseva, Tsimihasy, Mahatsara, Ambongamarina, Andranofafy'),
+(242, 'Betioky'),
+(243, 'Betoho'),
+(244, 'Betsako'),
+(245, 'Betsomangana'),
+(246, 'Bevahona'),
+(247, 'Bevapaza'),
+(248, 'Boanamary'),
+(249, 'Bosy'),
+(250, 'Bureau CEF'),
+(251, 'Bureau CEF Ankazobe'),
+(252, 'Bureau CEF Fénerive-Est'),
+(253, 'Bureau DREDD'),
+(254, 'Catholique Diego'),
+(255, 'CEG de reference'),
+(256, 'CEG Ilaka Est'),
+(257, 'Croisement Sasinaka'),
+(258, 'Distillerie MAB'),
+(259, 'Domaine forestier Ifanadiana'),
+(260, 'Ecole Saint François'),
+(261, 'Ecole SPM'),
+(262, 'EKAR Ambohimanga du sud'),
+(263, 'En face Fihamy'),
+(264, 'Enceinte DREDD'),
+(265, 'Enceinte DREDD Vak'),
+(266, 'Enceinte TEF'),
+(267, 'EPP Tanambao Morafeno'),
+(268, 'Farafasy'),
+(269, 'Fasintsara'),
+(270, 'Fenoevo'),
+(271, 'Firarazana'),
+(272, 'Fontsimavo'),
+(273, 'Galerie BAM'),
+(274, 'Genie militaire Manjakandriana'),
+(275, 'Iakora'),
+(276, 'Ilepo'),
+(277, 'Imongy'),
+(278, 'Iorombato'),
+(279, 'Irina'),
+(280, 'Irodo'),
+(281, 'Isesy'),
+(282, 'Itendro'),
+(283, 'Ivandrika'),
+(284, 'Ivovona'),
+(285, 'Joffre ville'),
+(286, 'Katsepy'),
+(287, 'Kianjamiakatra'),
+(288, 'Kimony'),
+(289, 'Lahogny'),
+(290, 'Lambokely'),
+(291, 'Lonilahy'),
+(292, 'Lovobe'),
+(293, 'Madiofasina'),
+(294, 'Madiofasy'),
+(295, 'Madirovalo'),
+(296, 'Mafaijijo'),
+(297, 'Mahabobe'),
+(298, 'Mahadera'),
+(299, 'Mahafidina I'),
+(300, 'Mahajamba Usine'),
+(301, 'Mahajanga'),
+(302, 'Mahalevona Sud'),
+(303, 'Maharabo'),
+(304, 'Mahasoa'),
+(305, 'Mahazina'),
+(306, 'Mahela'),
+(307, 'Mahialambo'),
+(308, 'Mahitsihazo'),
+(309, 'Maintimbato'),
+(310, 'Malaimborontsihy'),
+(311, 'Mamotratraka'),
+(312, 'Manahy'),
+(313, 'Manakana'),
+(314, 'Manakarabe'),
+(315, 'Manambato'),
+(316, 'Mananara 1'),
+(317, 'Mananara 2'),
+(318, 'Mananara 3'),
+(319, 'Mandena'),
+(320, 'Mandromoromotra'),
+(321, 'Manerinerina'),
+(322, 'Mangarivotra'),
+(323, 'Mangarivotra Est'),
+(324, 'Mangarivotra Ouest'),
+(325, 'Mangily'),
+(326, 'Manjarivo'),
+(327, 'Manombo'),
+(328, 'Mariarano'),
+(329, 'Marimbona'),
+(330, 'Maroalakely'),
+(331, 'Maroandilia'),
+(332, 'Marodimaka'),
+(333, 'Marofandilia,Beroboka, Ankaraobato/ Tomitsy'),
+(334, 'Marofarihy'),
+(335, 'Maromainty'),
+(336, 'Maromandia'),
+(337, 'Maromby'),
+(338, 'Maromitety'),
+(339, 'Marosakoa'),
+(340, 'Marotolana'),
+(341, 'Marovoay'),
+(342, 'Marovoay Banlieue'),
+(343, 'Masoarivo'),
+(344, 'Masondrota'),
+(345, 'Matsakabanja'),
+(346, 'Menagisa'),
+(347, 'Miarinarivo'),
+(348, 'Miary'),
+(349, 'Mideboka'),
+(350, 'Milomboka'),
+(351, 'Mitsinjo'),
+(352, 'Mizilo Gare'),
+(353, 'Morafeno'),
+(354, 'Morafenobe'),
+(355, 'Morarano'),
+(356, 'Nakengitra'),
+(357, 'Nandrahanana'),
+(358, 'Pépinière à Baie de Sakalava'),
+(359, 'Pépinière Ankorikihely'),
+(360, 'Pont Ankadirano IV'),
+(361, 'Pont Mahavavy'),
+(362, 'Près de la Société Fruit de Madagascar NSB'),
+(363, 'Ranomena'),
+(364, 'Ranopiso centre'),
+(365, 'Ranotsara'),
+(366, 'Rantolava'),
+(367, 'Régiment 117 (millitaire)'),
+(368, 'Réponse en attente'),
+(369, 'RS Ambohitantely'),
+(370, 'Sahamalo'),
+(371, 'Sahamaloto'),
+(372, 'Sahamazava'),
+(373, 'Sahantaha'),
+(374, 'Sahavolo'),
+(375, 'Saint luce'),
+(376, 'Saivaza'),
+(377, 'Sakalalina'),
+(378, 'Sakarara'),
+(379, 'Saofosa'),
+(380, 'Saromaona'),
+(381, 'Satrokala'),
+(382, 'Savana'),
+(383, 'Siège de CBSM Maromandia'),
+(384, 'Sitampiky'),
+(385, 'Site Agro-foresterie de l\'ONG'),
+(386, 'Site Durrell'),
+(387, 'Site TPF'),
+(388, 'Soahazo'),
+(389, 'Soalala'),
+(390, 'Station forestière'),
+(391, 'Station forèstière Ivoloina'),
+(392, 'Station Roussette'),
+(393, 'Takobola'),
+(394, 'Tambohorano'),
+(395, 'Tamplove'),
+(396, 'Tampolo'),
+(397, 'Tanambao SPM'),
+(398, 'Tanambaobe Tsivakina'),
+(399, 'Tanambaon\'Ambahatra'),
+(400, 'Tanambaovao'),
+(401, 'Tanambetsileo'),
+(402, 'Tanandavakely'),
+(403, 'Tolohomiady'),
+(404, 'Trangahy'),
+(405, 'Tsarabanja'),
+(406, 'Tsarahonenana'),
+(407, 'Tsarahonenana-Maromandia'),
+(408, 'Tsaramandroso'),
+(409, 'Tsaramandroso gare'),
+(410, 'Tsararano'),
+(411, 'Tsararivotra'),
+(412, 'Tsaratanana'),
+(413, 'Tsaratanana I'),
+(414, 'Tsaravavaka'),
+(415, 'Tsaravinany'),
+(416, 'Tsiazombazaha'),
+(417, 'Tsingoritelo'),
+(418, 'Usine A'),
+(419, 'Vatana'),
+(420, 'Vatolava'),
+(421, 'Vatomasina'),
+(422, 'Verama Masiloka'),
+(423, 'Veromanga'),
+(424, 'Voajanahary'),
+(425, 'Vodivato'),
+(426, 'Vohemar'),
+(427, 'Vohiboatavo'),
+(428, 'Vohiposa'),
+(429, 'Vohitrakondro'),
+(430, 'Vohitrapanga'),
+(431, 'Zazafotsy');
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `objectif_rpf`
 --
 
 DROP TABLE IF EXISTS `objectif_rpf`;
 CREATE TABLE IF NOT EXISTS `objectif_rpf` (
-  `ID_OBJECTIF_RPF` int NOT NULL AUTO_INCREMENT,
+  `ID_OBJECTIF_RPF` int(11) NOT NULL AUTO_INCREMENT,
   `LIBELLE_OBJECTIF_RPF` varchar(250) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`ID_OBJECTIF_RPF`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3 ;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `objectif_rpf`
@@ -2589,11 +3041,11 @@ INSERT INTO `objectif_rpf` (`ID_OBJECTIF_RPF`, `LIBELLE_OBJECTIF_RPF`) VALUES
 
 DROP TABLE IF EXISTS `objectif_specifique`;
 CREATE TABLE IF NOT EXISTS `objectif_specifique` (
-  `ID_OBJECTIF_SPECIFIQUE` int NOT NULL AUTO_INCREMENT,
+  `ID_OBJECTIF_SPECIFIQUE` int(11) NOT NULL AUTO_INCREMENT,
   `LIBELLE_OBJECTIF_SPECIFIQUE` varchar(250) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `ID_OBECTIF_RPF` int NOT NULL,
+  `ID_OBECTIF_RPF` int(11) NOT NULL,
   PRIMARY KEY (`ID_OBJECTIF_SPECIFIQUE`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb3 ;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `objectif_specifique`
@@ -2629,10 +3081,10 @@ INSERT INTO `objectif_specifique` (`ID_OBJECTIF_SPECIFIQUE`, `LIBELLE_OBJECTIF_S
 
 DROP TABLE IF EXISTS `organisme_appui`;
 CREATE TABLE IF NOT EXISTS `organisme_appui` (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `organisme_nom` varchar(250) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -2642,71 +3094,36 @@ CREATE TABLE IF NOT EXISTS `organisme_appui` (
 
 DROP TABLE IF EXISTS `pepiniere`;
 CREATE TABLE IF NOT EXISTS `pepiniere` (
-  `id_pepiniere` int NOT NULL AUTO_INCREMENT,
-  `dateRempl` date DEFAULT '0000-00-00',
+  `id_pepiniere` int(11) NOT NULL AUTO_INCREMENT,
+  `dateRempl` date DEFAULT NULL,
   `region` varchar(500) DEFAULT NULL,
   `district` varchar(500) DEFAULT NULL,
   `commune` varchar(500) DEFAULT NULL,
   `fokontany` varchar(500) DEFAULT NULL,
   `site` varchar(500) DEFAULT NULL,
+  `nom_pepiniere` varchar(255) DEFAULT NULL,
   `responsablePepiniere` varchar(500) DEFAULT NULL,
-  `contact_pepiniere` varchar(10) DEFAULT NULL,
+  `contact_responsable` varchar(10) DEFAULT NULL,
+  `type_acteur` varchar(255) DEFAULT NULL,
   `latitude` decimal(11,9) DEFAULT '0.000000000',
   `longitude` decimal(11,9) DEFAULT '0.000000000',
-  `nombrePlatebande` int DEFAULT '0',
-  `anneeExercice` varchar(10) DEFAULT NULL,
-  `users_id` int NOT NULL,
+  `nombrePlatebande` int(11) DEFAULT '0',
+  `users_id` int(11) NOT NULL,
   PRIMARY KEY (`id_pepiniere`),
   KEY `users_id` (`users_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `pepiniere`
 --
 
-INSERT INTO `pepiniere` (`id_pepiniere`, `dateRempl`, `region`, `district`, `commune`, `fokontany`, `site`, `responsablePepiniere`, `contact_pepiniere`, `latitude`, `longitude`, `nombrePlatebande`, `anneeExercice`, `users_id`) VALUES
-(1, '2022-04-07', 'ATSINANANA', 'Toamasina', 'Antetezambaro', 'Vohidrotra', 'Ampandroantsiriry', 'DREDD Ats', NULL, '-18.058055600', '49.378083300', 242, '2021-2022', 9),
-(2, '2022-04-07', 'ATSINANANA', 'Mahanoro', 'Mahanoro', 'Tsararivotra', 'CEF Mahanoro', 'CEF Mahanoro', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(3, '2022-04-07', 'ATSINANANA', 'Mahanoro', 'Betsizaraina', 'Niarovanivolo', 'Niarovanivolo', 'CEF Mahanoro et Projet PACARC', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(4, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Ambatofisaka', 'Ambinanimangabe', 'Ambinanimangabe', 'CEF Marolambo', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(5, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Ambalapaiso II', 'Ambalapaiso II', 'Ambalapaiso II', 'CEF Marolambo', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(6, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Anosiarivo', 'Anosiarivo', 'Anosiarivo', 'CEF Marolambo', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(7, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Betampona', 'Vohidamba', 'Vohidamba', 'CEF Marolambo', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(8, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'CEF', 'CEF', 'CEF Marolambo', NULL, '0.000000000', '0.000000000', 6, '2021-2022', 9),
-(9, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Androrangavola Tsienta', 'Androrangavola Tsienta', 'CEF Marolambo', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(10, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Maroleotra', 'Antanandrangady', 'CEF Marolambo', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(11, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Ampasimbola', 'Ampasimbola', 'CEF Marolambo', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(12, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Ambatomitsangana', 'Ambatomitsangana', 'CEF Marolambo', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(13, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Lapatsara', 'Tajomanga', 'CEF Marolambo', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(14, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Ambodivoangy', 'Ambodivoangy', 'CEF Marolambo', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(15, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Toakasina', 'Antsaharoy', 'PN Marolambo', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(16, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Sakavolo', 'Sakavolo', 'PN Marolambo', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(17, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Ambodivoara', 'Ambodivoara', 'PN Marolambo', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(18, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Lavakianja', 'Lavakianja', 'PN Marolambo', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(19, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Ambodinonoka', 'Ambodinonoka', 'PN Marolambo', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(20, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Andranovakoana', 'Andranovakoana', 'PN Marolambo', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(21, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Ankazomasina', 'Ankazomasina', 'PN Marolambo', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(22, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Marojiro', 'Marojiro', 'PN Marolambo', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(23, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Madiofasina', 'Madiofasina', 'PN Marolambo', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(24, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Masobeony', 'Masobeony', 'PN Marolambo', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(25, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Vohitsara', 'Vohitsara', 'PN Marolambo', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(26, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Manakana II', 'Manakana II', 'PN Marolambo', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(27, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Tombohantrova', 'Tombohantrova', 'PN Marolambo', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(28, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Mandroalina', 'Mandroalina', 'PN Marolambo', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(29, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Andranambomaro', 'Andranambomaro', 'PN Marolambo', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(30, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Taolandravina', 'Taolandravina', 'PN Marolambo', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(31, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Ambohitsara', 'Ambohitsara', 'PN Marolambo', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(32, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Salehy', 'Salehy', 'PN Marolambo', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(33, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Fiadanana', 'Fiadanana', 'PN Marolambo', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(34, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Sahanavo', 'Sahanavo', 'PN Marolambo', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(35, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Ambohimiadana', 'Ambohimiadana', 'PN Marolambo', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(36, '2022-04-07', 'ATSINANANA', 'Marolambo', 'Marolambo', 'Tanambao', 'Tanambao', 'PN Marolambo', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(38, '2022-04-07', 'ATSINANANA', 'Vatomandry', 'Marolambo', 'Vohitsara', 'CEF', 'CEF Vatomandry', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(39, '2022-04-07', 'ATSINANANA', 'Vatomandry', 'Marolambo', 'Ambalatenina', 'Amboditafara', 'BCM', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(40, '2022-04-07', 'ATSINANANA', 'Vatomandry', 'Marolambo', 'Ranomintina', 'Andraharahabe', 'BCM', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(41, '2022-04-07', 'ATSINANANA', 'Vatomandry', 'Marolambo', 'Antseranambe', 'Ambodiakondromena', 'BCM', NULL, '0.000000000', '0.000000000', 0, '2021-2022', 9),
-(42, '2022-04-07', 'ATSINANANA', '', 'Marolambo', 'Lanonana', 'Lanonana', 'VOI Dimbiazanjafy, Aspinall', NULL, '-18.732388889', '48.814250000', 0, '2021-2022', 9),
-(43, '2022-07-27', 'Menabe', 'Mahabo', 'Analamitsivalana', 'dfs', 'dfg', 'dfg', NULL, '0.000000000', '0.000000000', 255, '2022', 9);
+INSERT INTO `pepiniere` (`id_pepiniere`, `dateRempl`, `region`, `district`, `commune`, `fokontany`, `site`, `nom_pepiniere`, `responsablePepiniere`, `contact_responsable`, `type_acteur`, `latitude`, `longitude`, `nombrePlatebande`, `users_id`) VALUES
+(1, '2022-07-28', 'Alaotra Mangoro', 'Ambatondrazaka', 'Ambandrika', 'fokotany', 'site', 'andranomainty', 'kalvin', '0323423493', NULL, '0.000000000', '0.000000000', 230, 9),
+(2, '2022-07-28', 'Amoron I Mania', 'Ambositra', 'Ambalamanakana', 'mahavoky', 'mahajanga', 'Ambalabe', 'Mamy', '0323423499', NULL, '0.000000000', '0.000000000', 238, 9),
+(3, '2022-07-28', 'Melaky', 'Besalampy', 'Ampako', 'ambalakida', 'menabe', 'Ambalakida', 'martin', '0323423345', NULL, '0.000000000', '0.000000000', 444, 9),
+(4, '2022-07-28', 'Androy', 'Bekily', 'Ambatosola', 'mangarivotra', 'mangamanga', 'Ambalamahasoa', 'christophe', '0323645493', NULL, '0.000000000', '0.000000000', 2321, 9),
+(5, '2022-07-28', 'Amoron I Mania', 'Ambositra', 'Ambatofitorahana', 'fokotany', 'mahajanga', 'Enceinte SOCOTA/COTONA', 'Mamy', '0323423493', NULL, '0.000000000', '0.000000000', 23, 9),
+(6, '2022-07-28', 'Analamanga', 'Anjozorobe', 'Ambohibary Vohilena', 'marovava', 'bealanana', 'Alakamisy Anivosoa', 'Tsongy', '0323423412', '1E1A', '0.000000000', '0.000000000', 344, 9);
 
 -- --------------------------------------------------------
 
@@ -2716,7 +3133,7 @@ INSERT INTO `pepiniere` (`id_pepiniere`, `dateRempl`, `region`, `district`, `com
 
 DROP TABLE IF EXISTS `planification`;
 CREATE TABLE IF NOT EXISTS `planification` (
-  `id` int NOT NULL DEFAULT '0',
+  `id` int(11) NOT NULL DEFAULT '0',
   `dateRemplissage` date DEFAULT NULL,
   `acteur` varchar(1000) DEFAULT NULL,
   `typeActeur` varchar(1000) DEFAULT NULL,
@@ -2731,10 +3148,10 @@ CREATE TABLE IF NOT EXISTS `planification` (
   `surfaceTotalPrevu` decimal(10,2) DEFAULT NULL,
   `mangroveOuTerrestre` varchar(255) DEFAULT NULL,
   `anneeRebois` varchar(10) DEFAULT NULL,
-  `users_id` int DEFAULT NULL,
+  `users_id` int(11) DEFAULT NULL,
   `latitude` decimal(11,7) NOT NULL,
   `longitude` decimal(11,7) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `planification`
@@ -2780,18 +3197,18 @@ INSERT INTO `planification` (`id`, `dateRemplissage`, `acteur`, `typeActeur`, `d
 
 DROP TABLE IF EXISTS `plant_mise_terre`;
 CREATE TABLE IF NOT EXISTS `plant_mise_terre` (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `dateRegister` date DEFAULT NULL,
   `nomScientifique` varchar(500) DEFAULT NULL,
   `nomVernaculaire` varchar(500) DEFAULT NULL,
-  `nombrePlantMiseEnTerre` int DEFAULT NULL,
+  `nombrePlantMiseEnTerre` int(11) DEFAULT NULL,
   `SourcePlant` varchar(500) DEFAULT NULL,
-  `reboisement_id` int NOT NULL,
-  `users_id` int NOT NULL,
+  `reboisement_id` int(11) NOT NULL,
+  `users_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `users_id` (`users_id`),
   KEY `reboisement_id` (`reboisement_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3563 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=3563 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `plant_mise_terre`
@@ -6374,10 +6791,10 @@ INSERT INTO `plant_mise_terre` (`id`, `dateRegister`, `nomScientifique`, `nomVer
 
 DROP TABLE IF EXISTS `preparation_sol`;
 CREATE TABLE IF NOT EXISTS `preparation_sol` (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `preparationsol_libelle` varchar(250) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `preparation_sol`
@@ -6396,7 +6813,7 @@ INSERT INTO `preparation_sol` (`id`, `preparationsol_libelle`) VALUES
 
 DROP TABLE IF EXISTS `reboisement`;
 CREATE TABLE IF NOT EXISTS `reboisement` (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `dateRemplissage` date DEFAULT NULL,
   `acteur` varchar(1000) DEFAULT NULL,
   `typeActeur` varchar(1000) DEFAULT NULL,
@@ -6411,15 +6828,15 @@ CREATE TABLE IF NOT EXISTS `reboisement` (
   `objectifReboisement` varchar(1000) DEFAULT NULL,
   `objectifRpf` varchar(1000) DEFAULT NULL,
   `Approche` varchar(1000) DEFAULT NULL,
-  `surfaceTotalPrevu` int DEFAULT '0',
+  `surfaceTotalPrevu` int(11) DEFAULT '0',
   `superficieRealise` decimal(10,4) NOT NULL DEFAULT '0.0000',
   `class_` varchar(1000) DEFAULT NULL,
   `mangroveOuTerrestre` varchar(255) DEFAULT NULL,
   `dateMiseEnTerre` date DEFAULT NULL,
   `anneeRebois` varchar(10) DEFAULT NULL,
-  `users_id` int DEFAULT NULL,
-  `id_planification` int DEFAULT NULL,
-  `financement` int DEFAULT NULL,
+  `users_id` int(11) DEFAULT NULL,
+  `id_planification` int(11) DEFAULT NULL,
+  `financement` int(11) DEFAULT NULL,
   `polygone` longtext,
   `photoid` varchar(250) DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -6428,7 +6845,7 @@ CREATE TABLE IF NOT EXISTS `reboisement` (
   KEY `district` (`district`),
   KEY `commune` (`commune`),
   KEY `id_planification` (`id_planification`)
-) ENGINE=InnoDB AUTO_INCREMENT=1293 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=1293 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `reboisement`
@@ -7392,10 +7809,10 @@ INSERT INTO `reboisement` (`id`, `dateRemplissage`, `acteur`, `typeActeur`, `dre
 
 DROP TABLE IF EXISTS `region`;
 CREATE TABLE IF NOT EXISTS `region` (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `nom_region` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `region`
@@ -7436,7 +7853,7 @@ DROP TABLE IF EXISTS `regionmap`;
 CREATE TABLE IF NOT EXISTS `regionmap` (
   `ID_REGION` varchar(6) CHARACTER SET utf8mb4 NOT NULL,
   `LIBELLE_REGION` varchar(250) CHARACTER SET utf8mb4 DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `regionmap`
@@ -7474,12 +7891,12 @@ INSERT INTO `regionmap` (`ID_REGION`, `LIBELLE_REGION`) VALUES
 
 DROP TABLE IF EXISTS `role`;
 CREATE TABLE IF NOT EXISTS `role` (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `slug` varchar(255) NOT NULL,
-  `level` int NOT NULL,
+  `level` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `role`
@@ -7499,7 +7916,7 @@ INSERT INTO `role` (`id`, `name`, `slug`, `level`) VALUES
 
 DROP TABLE IF EXISTS `semis`;
 CREATE TABLE IF NOT EXISTS `semis` (
-  `id_semis` int NOT NULL AUTO_INCREMENT,
+  `id_semis` int(11) NOT NULL AUTO_INCREMENT,
   `type_semis` varchar(255) NOT NULL,
   PRIMARY KEY (`id_semis`)
 ) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
@@ -7521,12 +7938,12 @@ INSERT INTO `semis` (`id_semis`, `type_semis`) VALUES
 
 DROP TABLE IF EXISTS `sujet_discussion`;
 CREATE TABLE IF NOT EXISTS `sujet_discussion` (
-  `ID_SUJET` int NOT NULL AUTO_INCREMENT,
+  `ID_SUJET` int(11) NOT NULL AUTO_INCREMENT,
   `LIBELLE_SUJET` varchar(500) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `DATE_SAISIE` datetime NOT NULL,
   `UTILISATEUR` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   KEY `ID_SUJET` (`ID_SUJET`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb3 ;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `sujet_discussion`
@@ -7548,13 +7965,13 @@ INSERT INTO `sujet_discussion` (`ID_SUJET`, `LIBELLE_SUJET`, `DATE_SAISIE`, `UTI
 
 DROP TABLE IF EXISTS `sujet_discussion_details`;
 CREATE TABLE IF NOT EXISTS `sujet_discussion_details` (
-  `ID_DISCUSSION` int NOT NULL AUTO_INCREMENT,
+  `ID_DISCUSSION` int(11) NOT NULL AUTO_INCREMENT,
   `UTILISATEUR` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `MESSAGE` varchar(4000) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `DATE_SAISIE` datetime NOT NULL,
-  `ID_SUJET` int NOT NULL,
+  `ID_SUJET` int(11) NOT NULL,
   PRIMARY KEY (`ID_DISCUSSION`)
-) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb3 ;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `sujet_discussion_details`
@@ -7600,12 +8017,12 @@ INSERT INTO `sujet_discussion_details` (`ID_DISCUSSION`, `UTILISATEUR`, `MESSAGE
 
 DROP TABLE IF EXISTS `type_acteur`;
 CREATE TABLE IF NOT EXISTS `type_acteur` (
-  `ID_TYPE_ACTEUR` int NOT NULL AUTO_INCREMENT,
+  `ID_TYPE_ACTEUR` int(11) NOT NULL AUTO_INCREMENT,
   `LIBELLETYPE_ACTEUR` varchar(250) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `DESCRIPTION` varchar(250) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`ID_TYPE_ACTEUR`),
   KEY `ID_TYPE_ACTEUR` (`ID_TYPE_ACTEUR`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb3 ;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `type_acteur`
@@ -7613,7 +8030,7 @@ CREATE TABLE IF NOT EXISTS `type_acteur` (
 
 INSERT INTO `type_acteur` (`ID_TYPE_ACTEUR`, `LIBELLETYPE_ACTEUR`, `DESCRIPTION`) VALUES
 (1, '1E1A', 'Ecole, EPP, CEG, Lycee, CISCO (publique et privee)'),
-(2, 'ASSOCIATION', 'femmes, jeunes, …'),
+(2, 'ASSOCIATION', 'femmes, jeunes, ...'),
 (3, 'GESTIONNAIRE AP', NULL),
 (4, 'INSTITUTION PUBLIQUE', 'CTD/STD'),
 (5, 'PARTICULIER', NULL),
@@ -7630,19 +8047,19 @@ INSERT INTO `type_acteur` (`ID_TYPE_ACTEUR`, `LIBELLETYPE_ACTEUR`, `DESCRIPTION`
 
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `nom` varchar(255) DEFAULT NULL,
   `prenom` varchar(255) DEFAULT NULL,
   `identifiant` varchar(255) DEFAULT NULL,
   `mail` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
-  `confirme` int DEFAULT NULL,
-  `id_diredd_dredd_ciredd` int NOT NULL,
-  `role_id` int NOT NULL,
+  `confirme` int(11) DEFAULT NULL,
+  `id_diredd_dredd_ciredd` int(11) NOT NULL,
+  `role_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `role_id` (`role_id`),
   KEY `id_diredd_dredd_ciredd` (`id_diredd_dredd_ciredd`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `users`
@@ -7650,7 +8067,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 INSERT INTO `users` (`id`, `nom`, `prenom`, `identifiant`, `mail`, `password`, `confirme`, `id_diredd_dredd_ciredd`, `role_id`) VALUES
 (1, 'ADMIN', 'DCSI', 'superadmin', 'ankohay@gmail.com', '$2y$10$HjB9n0n.pYhD.4wrl9G03OoFjhk4IXDu/Hr1ChUnitNp4NDeptS7K', 1, 21, 1),
-(8, 'ANDRI', 'Rova', 'rova', 'rova@mail.com', '$2y$10$nyGHHIZt7XUDQMchJMnUk.fYmQ4UytrhfBFYJH25THJ28Riq4bnMi', 1, 21, 1),
+(8, 'ANDRI', 'Rova', 'rova', 'rova@mail.com', '$2y$10$nyGHHIZt7XUDQMchJMnUk.fYmQ4UytrhfBFYJH25THJ28Riq4bnMi', 1, 14, 2),
 (9, 'user', 'user', 'user', 'user@mail.com', '$2y$10$nyGHHIZt7XUDQMchJMnUk.fYmQ4UytrhfBFYJH25THJ28Riq4bnMi', 1, 21, 2),
 (11, 'RAJAONARISON', 'MIHAMINA NIRIANA', 'TITY', 'senseitity@gmail.com', '$2y$10$lpEQdZoFppslJ1z1QhpeX.ZUGeuKetuxqzgZOK6S0aUKE/w7nboWK', 1, 14, 3),
 (12, 'RAKOTOMANGA', 'Fenitrinihaina Miandrisoa', 'FENITRA', 'fenitratoto@gmail.com', '$2y$10$IdIWOXlxMFBUzQ65X2.r.u9jZ6AStTtym0Z.LDE.MpxpoEcB9hWde', 1, 16, 3),
@@ -7669,7 +8086,23 @@ INSERT INTO `users` (`id`, `nom`, `prenom`, `identifiant`, `mail`, `password`, `
 -- (Voir ci-dessous la vue réelle)
 --
 DROP VIEW IF EXISTS `v_realisation`;
-
+CREATE TABLE IF NOT EXISTS `v_realisation` (
+`acteur` varchar(1000)
+,`typeActeur` varchar(1000)
+,`objectifReboisement` varchar(1000)
+,`objectifRpf` varchar(1000)
+,`region` varchar(255)
+,`district` varchar(255)
+,`commune` varchar(255)
+,`nomScientifique` varchar(500)
+,`mangroveOuTerrestre` varchar(255)
+,`Approche` varchar(1000)
+,`NOMBRE_PLANTS` decimal(32,0)
+,`surfacePrevu` decimal(32,0)
+,`SourcePlant` varchar(500)
+,`superficieRealise` decimal(32,4)
+,`annee_reboisement` varchar(10)
+);
 
 -- --------------------------------------------------------
 
@@ -7678,8 +8111,7 @@ DROP VIEW IF EXISTS `v_realisation`;
 --
 DROP TABLE IF EXISTS `v_realisation`;
 
-DROP VIEW IF EXISTS `v_realisation`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`dcsiuser`@`localhost` SQL SECURITY DEFINER VIEW `v_realisation`  AS SELECT `a`.`acteur` AS `acteur`, `a`.`typeActeur` AS `typeActeur`, `c`.`objectifReboisement` AS `objectifReboisement`, `c`.`objectifRpf` AS `objectifRpf`, `a`.`region` AS `region`, `a`.`district` AS `district`, `a`.`commune` AS `commune`, `b`.`nomScientifique` AS `nomScientifique`, `a`.`mangroveOuTerrestre` AS `mangroveOuTerrestre`, `a`.`Approche` AS `Approche`, sum(`b`.`nombrePlantMiseEnTerre`) AS `NOMBRE_PLANTS`, sum(`a`.`surfaceTotalPrevu`) AS `surfacePrevu`, `b`.`SourcePlant` AS `SourcePlant`, sum(`a`.`superficieRealise`) AS `superficieRealise`, `a`.`anneeRebois` AS `annee_reboisement` FROM ((`reboisement` `a` left join `plant_mise_terre` `b` on((`a`.`id` = `b`.`reboisement_id`))) left join `planification` `c` on((`a`.`id_planification` = `c`.`id`))) GROUP BY `a`.`acteur`, `c`.`objectifReboisement`, `c`.`objectifRpf`, `a`.`region`, `a`.`district`, `a`.`commune`, `b`.`nomScientifique`, `a`.`mangroveOuTerrestre`, `a`.`Approche`, `a`.`anneeRebois` ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`dcsiuser`@`localhost` SQL SECURITY DEFINER VIEW `v_realisation`  AS  select `a`.`acteur` AS `acteur`,`a`.`typeActeur` AS `typeActeur`,`c`.`objectifReboisement` AS `objectifReboisement`,`c`.`objectifRpf` AS `objectifRpf`,`a`.`region` AS `region`,`a`.`district` AS `district`,`a`.`commune` AS `commune`,`b`.`nomScientifique` AS `nomScientifique`,`a`.`mangroveOuTerrestre` AS `mangroveOuTerrestre`,`a`.`Approche` AS `Approche`,sum(`b`.`nombrePlantMiseEnTerre`) AS `NOMBRE_PLANTS`,sum(`a`.`surfaceTotalPrevu`) AS `surfacePrevu`,`b`.`SourcePlant` AS `SourcePlant`,sum(`a`.`superficieRealise`) AS `superficieRealise`,`a`.`anneeRebois` AS `annee_reboisement` from ((`reboisement` `a` left join `plant_mise_terre` `b` on((`a`.`id` = `b`.`reboisement_id`))) left join `planification` `c` on((`a`.`id_planification` = `c`.`id`))) group by `a`.`acteur`,`c`.`objectifReboisement`,`c`.`objectifRpf`,`a`.`region`,`a`.`district`,`a`.`commune`,`b`.`nomScientifique`,`a`.`mangroveOuTerrestre`,`a`.`Approche`,`a`.`anneeRebois` ;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
